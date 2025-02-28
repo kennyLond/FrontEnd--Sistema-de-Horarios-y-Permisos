@@ -15,6 +15,7 @@ import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dial
 import { Persona } from '../../interfaces/persona';
 import { AgregarEditarPersonasComponent } from '../agregar-editar-personas/agregar-editar-personas.component';
 
+
 // Datos de ejemplo
 const listPersonas: Persona[] = [
   { nombre: "Kenny", apellido: "Londoño", correo: "kenny@gmail.com", tipoDocumento: "CC", documento: 1091675329, fechaNacimiento: new Date() },

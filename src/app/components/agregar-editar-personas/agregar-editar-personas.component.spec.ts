@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AgregarEditarPersonasComponent } from './agregar-editar-personas.component';
 
 describe('AgregarEditarPersonasComponent', () => {
