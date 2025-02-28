@@ -8,7 +8,7 @@
         <input matInput  (keyup)="applyFilter($event)" #input autocomplete="off" >
     </mat-form-field>
 
-    <button mat-raised-button (click)="addEditPersona()" color="primary">Agregar</button> <!--realizamos este metodo que sera el mismo que usamos para la opcion de editar-->
+    <button mat-raised-button (click)="addEditPersona()">Agregar</button> <!--realizamos este metodo que sera el mismo que usamos para la opcion de editar-->
 
     <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z5">
 
