@@ -10,15 +10,17 @@ import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
+import {MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 // Importación de CommonModule
 import { CommonModule } from '@angular/common'; 
 import { Persona } from '../../interfaces/persona';
+import { AgregarEditarPersonasComponent } from '../agregar-editar-personas/agregar-editar-personas.component';
 
 @Component({
   selector: 'app-list-personas',
   standalone: true,
-  imports: [MatToolbarModule, MatCardModule, MatTableModule, CommonModule, MatPaginatorModule, MatSortModule,MatFormFieldModule,MatInputModule,MatIconModule,MatTooltipModule,MatButtonModule],
+  imports: [MatToolbarModule, MatCardModule, MatTableModule, CommonModule, MatPaginatorModule, MatSortModule,MatFormFieldModule,MatInputModule,MatIconModule,MatTooltipModule,MatButtonModule,MatDialogModule],
   templateUrl: './list-personas.component.html',
   styleUrls: ['./list-personas.component.css'] // 🔹 Corregido "styleUrls"
 })
@@ -29,7 +31,7 @@ export class ListPersonasComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort; // 🔹 Declarado correctamente fuera del constructor
 
-  constructor() {
+  constructor(public dialog: MatDialog) {
     this.dataSource = new MatTableDataSource(listPersonas);
   }
 
@@ -42,6 +44,17 @@ export class ListPersonasComponent implements AfterViewInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+if(this.dataSource.paginator){
+  this.dataSource.paginator.firstPage();
+}
+  }
+
+  addEditPersona() {
+    const dialogRef = this.dialog.open(AgregarEditarPersonasComponent, {
+      width: '550px',
+      height: '300px'
+    });
+
   }
 }
 
