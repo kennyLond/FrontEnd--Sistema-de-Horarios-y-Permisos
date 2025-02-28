@@ -1,0 +1,26 @@
+table{
+ width: 100%;
+}
+
+mat-form-field {
+font-size: 14px;
+width: 90%;
+}
+
+.btnEdit, .btnDelete {
+    cursor: pointer;
+
+}
+
+.btnEdit {
+    color: #49ceff;
+
+}
+
+.btnDelete{
+    color: red;
+
+} 
+button{
+    width: 5%;
+}

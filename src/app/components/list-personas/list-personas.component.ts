@@ -7,6 +7,9 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatButtonModule} from '@angular/material/button';
 
 // Importación de CommonModule
 import { CommonModule } from '@angular/common'; 
@@ -15,12 +18,12 @@ import { Persona } from '../../interfaces/persona';
 @Component({
   selector: 'app-list-personas',
   standalone: true,
-  imports: [MatToolbarModule, MatCardModule, MatTableModule, CommonModule, MatPaginatorModule, MatSortModule,MatFormFieldModule,MatInputModule],
+  imports: [MatToolbarModule, MatCardModule, MatTableModule, CommonModule, MatPaginatorModule, MatSortModule,MatFormFieldModule,MatInputModule,MatIconModule,MatTooltipModule,MatButtonModule],
   templateUrl: './list-personas.component.html',
   styleUrls: ['./list-personas.component.css'] // 🔹 Corregido "styleUrls"
 })
 export class ListPersonasComponent implements AfterViewInit {
-  displayedColumns: string[] = ['nombre', 'apellido', 'correo', 'tipoDocumento', 'documento', 'fechaNacimiento'];
+  displayedColumns: string[] = ['nombre', 'apellido', 'correo', 'tipoDocumento', 'documento', 'fechaNacimiento', 'acciones'];
   dataSource: MatTableDataSource<Persona>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
