@@ -1,50 +1,44 @@
+// Importaciones de Angular Material
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 
-//import de angular material
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatCardModule} from '@angular/material/card';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+// Importación de CommonModule
+import { CommonModule } from '@angular/common'; 
 import { Persona } from '../../interfaces/persona';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import { Component, ViewChild } from '@angular/core';
 
-
-
-//import de PIPE
-import { CommonModule } from '@angular/common'; // ✅ Importa CommonModule
 @Component({
   selector: 'app-list-personas',
-  imports: [MatToolbarModule,MatCardModule, MatTableModule, CommonModule,MatPaginatorModule ],
+  standalone: true,
+  imports: [MatToolbarModule, MatCardModule, MatTableModule, CommonModule, MatPaginatorModule, MatSortModule],
   templateUrl: './list-personas.component.html',
-  styleUrl: './list-personas.component.css'
+  styleUrls: ['./list-personas.component.css'] // 🔹 Corregido "styleUrls"
 })
-export class ListPersonasComponent {
+export class ListPersonasComponent implements AfterViewInit {
   displayedColumns: string[] = ['nombre', 'apellido', 'correo', 'tipoDocumento', 'documento', 'fechaNacimiento'];
   dataSource: MatTableDataSource<Persona>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort; // 🔹 Declarado correctamente fuera del constructor
 
-  constructor(){
-
+  constructor() {
     this.dataSource = new MatTableDataSource(listPersonas);
-
   }
 
-  ngOnInit(): void{
-
-  }
-
-  ngAfterViewInit(): void{
+  ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
-    this.dataSource.paginator._intl.itemsPerPageLabel = "Items por paginas"
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator._intl.itemsPerPageLabel = "Ítems por página";
   }
-
 }
 
-
+// Datos de ejemplo
 const listPersonas: Persona[] = [
-  {nombre:"Kenny", apellido:"Londoño", correo:"kenny@gmail.com", tipoDocumento:"cc", documento:1091675329, fechaNacimiento: new Date(),},
-  {nombre:"Marcela", apellido:"Paez", correo:"marcela@gmail.com", tipoDocumento:"cc", documento:145675329, fechaNacimiento: new Date()},
-  {nombre:"Karen", apellido:"suarez", correo:"karen@gmail.com", tipoDocumento:"cc", documento:104545329, fechaNacimiento: new Date()},
-  {nombre:"Marta", apellido:"rodriguez", correo:"marta@gmail.com", tipoDocumento:"cc", documento:1075329, fechaNacimiento: new Date()}
+  { nombre: "Kenny", apellido: "Londoño", correo: "kenny@gmail.com", tipoDocumento: "CC", documento: 1091675329, fechaNacimiento: new Date() },
+  { nombre: "Marcela", apellido: "Paez", correo: "marcela@gmail.com", tipoDocumento: "CC", documento: 145675329, fechaNacimiento: new Date() },
+  { nombre: "Karen", apellido: "Suarez", correo: "karen@gmail.com", tipoDocumento: "CC", documento: 104545329, fechaNacimiento: new Date() },
+  { nombre: "Marta", apellido: "Rodríguez", correo: "marta@gmail.com", tipoDocumento: "CC", documento: 1075329, fechaNacimiento: new Date() }
 ];
-

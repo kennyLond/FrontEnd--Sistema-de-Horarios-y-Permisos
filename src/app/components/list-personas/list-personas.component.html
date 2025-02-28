@@ -2,15 +2,15 @@
     <span>Sistema de Gestión de Horarios y Empelados</span>
 </mat-toolbar>
 <mat-card appearance="outlined">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z5">
+    <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z5">
 
         <ng-container matColumnDef="nombre">
-          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
           <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
         </ng-container>
 
         <ng-container matColumnDef="apellido">
-            <th mat-header-cell *matHeaderCellDef> Apellido </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </th>
             <td mat-cell *matCellDef="let element"> {{element.apellido}} </td>
         </ng-container>
 
