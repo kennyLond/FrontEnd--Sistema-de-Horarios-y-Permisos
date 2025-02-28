@@ -2,6 +2,12 @@
     <span>Sistema de Gestión de Horarios y Empelados</span>
 </mat-toolbar>
 <mat-card appearance="outlined">
+
+    <mat-form-field>
+        <mat-label>Filtro</mat-label>
+        <input matInput  (keyup)="applyFilter($event)" #input autocomplete="off" >
+    </mat-form-field>
+
     <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z5">
 
         <ng-container matColumnDef="nombre">
@@ -40,4 +46,5 @@
 
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
 </mat-card>
+
 
