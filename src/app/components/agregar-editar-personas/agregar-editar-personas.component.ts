@@ -7,8 +7,9 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Persona } from '../../interfaces/persona';
+import { CommonModule } from '@angular/common';
 
 
 
@@ -17,7 +18,7 @@ import { Persona } from '../../interfaces/persona';
 @Component({
   selector: 'app-agregar-editar-personas',
   standalone: true, // Indica que es un componente independiente
-  imports: [MatDialogModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatIconModule, MatSelectModule,MatDatepickerModule,ReactiveFormsModule],
+  imports: [MatDialogModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatIconModule, MatSelectModule,MatDatepickerModule,ReactiveFormsModule,CommonModule],
   providers: [provideNativeDateAdapter()],
   templateUrl: './agregar-editar-personas.component.html',
   styleUrl: './agregar-editar-personas.component.css'
@@ -28,16 +29,18 @@ export class AgregarEditarPersonasComponent {
 
   form: FormGroup;
 
+  maxDate: Date;
 
   constructor(public dialogRef: MatDialogRef<AgregarEditarPersonasComponent>,
     private fb:FormBuilder) {
+      this.maxDate =new Date();
       this.form = this.fb.group({
-        nombre: [''],
-        apellido: [''],
-        correo: [''],
-        tipoDocumento: [null],
-        documento: [null],
-        fechaNacimiento: [null],
+        nombre: ['',[Validators.required,Validators.maxLength(20) ]],
+        apellido: ['',Validators.required],
+        correo: ['', [Validators.required, Validators.email]],
+        tipoDocumento: [null ,Validators.required],
+        documento: [null,[Validators.required,Validators.pattern("^[0-9]*$")]],
+        fechaNacimiento: [null,Validators.required],
 
       })
 
@@ -48,7 +51,10 @@ export class AgregarEditarPersonasComponent {
     this.dialogRef.close();
   }
 addEditPersona(){
-  console.log(this.form)
+
+  if(this.form.invalid){
+    return;
+  }
   /*tambien podemos hacerlo con const nombre =this.form.value.nombre; */
   const persona: Persona = {
     nombre: this.form.value.nombre,
@@ -58,7 +64,7 @@ addEditPersona(){
     documento: this.form.value.documento,
     fechaNacimiento: this.form.value.fechaNacimiento
   }
-  console.log(persona);
+  console.log(this.form);
 
 }
 

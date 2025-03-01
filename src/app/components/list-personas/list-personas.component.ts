@@ -21,6 +21,8 @@ const listPersonas: Persona[] = [
   { nombre: "Kenny", apellido: "Londoño", correo: "kenny@gmail.com", tipoDocumento: "CC", documento: 1091675329, fechaNacimiento: new Date() },
   { nombre: "Marcela", apellido: "Paez", correo: "marcela@gmail.com", tipoDocumento: "CC", documento: 145675329, fechaNacimiento: new Date() },
   { nombre: "Karen", apellido: "Suarez", correo: "karen@gmail.com", tipoDocumento: "CC", documento: 104545329, fechaNacimiento: new Date() },
+  { nombre: "Marta", apellido: "Rodríguez", correo: "marta@gmail.com", tipoDocumento: "CC", documento: 1075329, fechaNacimiento: new Date() },
+  { nombre: "Karen", apellido: "Suarez", correo: "karen@gmail.com", tipoDocumento: "CC", documento: 104545329, fechaNacimiento: new Date() },
   { nombre: "Marta", apellido: "Rodríguez", correo: "marta@gmail.com", tipoDocumento: "CC", documento: 1075329, fechaNacimiento: new Date() }
 ];
 
@@ -42,7 +44,7 @@ export class ListPersonasComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(public dialog: MatDialog) { // ✅ Cambiado 'dialogRef' por 'dialog'
+  constructor(public dialog: MatDialog) { //Estudiar 'dialogRef' y 'dialog'
     this.dataSource = new MatTableDataSource(listPersonas);
   }
 
@@ -61,6 +63,7 @@ export class ListPersonasComponent implements AfterViewInit {
   }
 
   addEditPersona() {
+
     const dialogRef: MatDialogRef<AgregarEditarPersonasComponent> = this.dialog.open(AgregarEditarPersonasComponent, {
       width: '550px',
       disableClose: true,
