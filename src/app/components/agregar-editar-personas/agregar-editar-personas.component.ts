@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import { DateAdapter, provideNativeDateAdapter } from '@angular/material/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Persona } from '../../interfaces/persona';
 import { CommonModule } from '@angular/common';
@@ -35,7 +35,8 @@ export class AgregarEditarPersonasComponent {
   loading: boolean = false;
 
   constructor(public dialogRef: MatDialogRef<AgregarEditarPersonasComponent>,
-    private fb:FormBuilder, private _personaService: PersonaService,  private _snackBar: MatSnackBar) {
+    private fb:FormBuilder, private _personaService: PersonaService,  private _snackBar: MatSnackBar, private dateAdapter: DateAdapter<any>) {
+      this.maxDate = new Date();
       this.maxDate =new Date();
       this.form = this.fb.group({
         nombre: ['',[Validators.required,Validators.maxLength(20) ]],
@@ -44,8 +45,8 @@ export class AgregarEditarPersonasComponent {
         tipoDocumento: [null ,Validators.required],
         documento: [null,[Validators.required,Validators.pattern("^[0-9]*$")]],
         fechaNacimiento: [null,Validators.required],
-
       })
+      dateAdapter.setLocale('es');
     }
 
   cancelar() {
@@ -60,7 +61,7 @@ addEditPersona(){
   const persona: Persona = {
     nombre: this.form.value.nombre,
     apellido: this.form.value.apellido,
-    correo: this.form.value.apellido,
+    correo: this.form.value.correo,
     tipoDocumento: this.form.value.tipoDocumento,
     documento: this.form.value.documento,
     fechaNacimiento: this.form.value.fechaNacimiento.toISOString().slice(0,10)
