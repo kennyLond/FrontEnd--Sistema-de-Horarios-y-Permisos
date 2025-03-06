@@ -14,6 +14,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Persona } from '../../interfaces/persona';
 import { AgregarEditarPersonasComponent } from '../agregar-editar-personas/agregar-editar-personas.component';
+import { PersonaService } from '../../services/persona.service';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 
 // Datos de ejemplo
@@ -32,7 +34,7 @@ const listPersonas: Persona[] = [
   imports: [
     CommonModule, MatToolbarModule, MatCardModule, MatTableModule, 
     MatPaginatorModule, MatSortModule, MatFormFieldModule, MatInputModule, 
-    MatIconModule, MatTooltipModule, MatButtonModule, MatDialogModule
+    MatIconModule, MatTooltipModule, MatButtonModule, MatDialogModule,MatProgressBarModule
   ],
   templateUrl: './list-personas.component.html',
   styleUrls: ['./list-personas.component.css']
@@ -40,18 +42,33 @@ const listPersonas: Persona[] = [
 export class ListPersonasComponent implements AfterViewInit {
   displayedColumns: string[] = ['nombre', 'apellido', 'correo', 'tipoDocumento', 'documento', 'fechaNacimiento', 'acciones'];
   dataSource: MatTableDataSource<Persona>;
+  loading: boolean =false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(public dialog: MatDialog) { //Estudiar 'dialogRef' y 'dialog'
+  constructor(public dialog: MatDialog, private _personaService: PersonaService) { //Estudiar 'dialogRef' y 'dialog'
     this.dataSource = new MatTableDataSource(listPersonas);
+  }
+
+  ngOnInit(): void{
+    this.obtenerPersonas();
   }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator._intl.itemsPerPageLabel = "Ítems por página";
+  }
+
+  obtenerPersonas(){
+    this.loading = true;
+    this._personaService.getPersonas().subscribe(data => {
+      this.loading = false;
+      this.dataSource = new MatTableDataSource(data);  // ✅ SOLUCIÓN: Asigna los datos a la tabla.
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    })
   }
 
   applyFilter(event: Event) {
@@ -73,5 +90,11 @@ export class ListPersonasComponent implements AfterViewInit {
       console.log('El diálogo fue cerrado', result);
     });
   }
+
+  deletePersona(id: number){
+    console.log(id)
+  }
+
+
 }
 

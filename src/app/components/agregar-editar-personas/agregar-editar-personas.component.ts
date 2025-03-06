@@ -25,7 +25,7 @@ import { CommonModule } from '@angular/common';
 })
 export class AgregarEditarPersonasComponent {
 
-  tipoDocumento: string[] = ['Cedula de ciudadania', 'Pasaporte'];
+  tipoDocumento: string[] = ['CC', 'Pasaporte'];
 
   form: FormGroup;
 

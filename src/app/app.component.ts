@@ -5,6 +5,7 @@ import { ListPersonasComponent } from "./components/list-personas/list-personas.
 
 @Component({
   selector: 'app-root',
+  standalone:true,
   imports: [ MatSlideToggleModule, ListPersonasComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

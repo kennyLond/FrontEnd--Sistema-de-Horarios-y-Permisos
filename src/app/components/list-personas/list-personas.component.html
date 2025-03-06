@@ -1,8 +1,11 @@
 <mat-toolbar color="primary">
-    <span>Sistema de Gestión de Horarios y Empleados</span>
+    <span>Listado de Empleados</span>
 </mat-toolbar>
-<mat-card appearance="outlined">
 
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+
+<mat-card >
     <mat-form-field>
         <mat-label>Filtro</mat-label>
         <input matInput  (keyup)="applyFilter($event)" #input autocomplete="off" >
@@ -46,7 +49,7 @@
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element">
             <mat-icon class="btnEdit" matTooltip="Editar">edit</mat-icon>  <!--Los iconos deben ponerse en nombre minuscula-->
-            <mat-icon class="btnDelete" matTooltip="Eliminar">delete</mat-icon>
+            <mat-icon (click)="deletePersona(element.id)" class="btnDelete" matTooltip="Eliminar">delete</mat-icon>
             </td>
         </ng-container>
 
