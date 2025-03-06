@@ -92,7 +92,9 @@ export class ListPersonasComponent implements AfterViewInit {
   }
 
   deletePersona(id: number){
-    console.log(id)
+    this._personaService.deletePersona(id).subscribe(() =>{
+      this.obtenerPersonas();
+    } )
   }
 
 
