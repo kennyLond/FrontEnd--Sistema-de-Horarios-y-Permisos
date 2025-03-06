@@ -11,19 +11,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Persona } from '../../interfaces/persona';
 import { AgregarEditarPersonasComponent } from '../agregar-editar-personas/agregar-editar-personas.component';
 import { PersonaService } from '../../services/persona.service';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
-
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 // Datos de ejemplo
 const listPersonas: Persona[] = [
   { nombre: "Kenny", apellido: "Londoño", correo: "kenny@gmail.com", tipoDocumento: "CC", documento: 1091675329, fechaNacimiento: new Date() },
   { nombre: "Marcela", apellido: "Paez", correo: "marcela@gmail.com", tipoDocumento: "CC", documento: 145675329, fechaNacimiento: new Date() },
-  { nombre: "Karen", apellido: "Suarez", correo: "karen@gmail.com", tipoDocumento: "CC", documento: 104545329, fechaNacimiento: new Date() },
-  { nombre: "Marta", apellido: "Rodríguez", correo: "marta@gmail.com", tipoDocumento: "CC", documento: 1075329, fechaNacimiento: new Date() },
   { nombre: "Karen", apellido: "Suarez", correo: "karen@gmail.com", tipoDocumento: "CC", documento: 104545329, fechaNacimiento: new Date() },
   { nombre: "Marta", apellido: "Rodríguez", correo: "marta@gmail.com", tipoDocumento: "CC", documento: 1075329, fechaNacimiento: new Date() }
 ];
@@ -34,7 +32,8 @@ const listPersonas: Persona[] = [
   imports: [
     CommonModule, MatToolbarModule, MatCardModule, MatTableModule, 
     MatPaginatorModule, MatSortModule, MatFormFieldModule, MatInputModule, 
-    MatIconModule, MatTooltipModule, MatButtonModule, MatDialogModule,MatProgressBarModule
+    MatIconModule, MatTooltipModule, MatButtonModule, MatDialogModule, 
+    MatProgressBarModule, MatSnackBarModule
   ],
   templateUrl: './list-personas.component.html',
   styleUrls: ['./list-personas.component.css']
@@ -42,33 +41,37 @@ const listPersonas: Persona[] = [
 export class ListPersonasComponent implements AfterViewInit {
   displayedColumns: string[] = ['nombre', 'apellido', 'correo', 'tipoDocumento', 'documento', 'fechaNacimiento', 'acciones'];
   dataSource: MatTableDataSource<Persona>;
-  loading: boolean =false;
+  loading: boolean = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(public dialog: MatDialog, private _personaService: PersonaService) { //Estudiar 'dialogRef' y 'dialog'
+  constructor(public dialog: MatDialog, private _personaService: PersonaService, private _snackBar: MatSnackBar) {
     this.dataSource = new MatTableDataSource(listPersonas);
   }
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.obtenerPersonas();
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator._intl.itemsPerPageLabel = "Ítems por página";
+    if (this.paginator && this.sort) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator._intl.itemsPerPageLabel = "Ítems por página";
+    }
   }
 
-  obtenerPersonas(){
+  obtenerPersonas() {
     this.loading = true;
     this._personaService.getPersonas().subscribe(data => {
       this.loading = false;
-      this.dataSource = new MatTableDataSource(data);  // ✅ SOLUCIÓN: Asigna los datos a la tabla.
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    })
+      this.dataSource = new MatTableDataSource(data);
+      if (this.paginator && this.sort) {
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
+    });
   }
 
   applyFilter(event: Event) {
@@ -80,23 +83,28 @@ export class ListPersonasComponent implements AfterViewInit {
   }
 
   addEditPersona() {
-
-    const dialogRef: MatDialogRef<AgregarEditarPersonasComponent> = this.dialog.open(AgregarEditarPersonasComponent, {
+    const dialogRef = this.dialog.open(AgregarEditarPersonasComponent, {
       width: '550px',
       disableClose: true,
     });
 
-    dialogRef.afterClosed().subscribe(result => { 
+    dialogRef.afterClosed().subscribe(result => {
       console.log('El diálogo fue cerrado', result);
     });
   }
 
-  deletePersona(id: number){
-    this._personaService.deletePersona(id).subscribe(() =>{
+  deletePersona(id: number) {
+    this.loading = true;
+    this._personaService.deletePersona(id).subscribe(() => {
+      this.loading = false;
       this.obtenerPersonas();
-    } )
+      this.mensajeExito();
+    });
   }
 
-
+  mensajeExito() {
+    this._snackBar.open('La persona fue eliminada con éxito', '', {
+      duration: 2000
+    });
+  }
 }
-
