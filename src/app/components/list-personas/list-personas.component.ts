@@ -89,7 +89,9 @@ export class ListPersonasComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('El diálogo fue cerrado', result);
+      if(result){
+        this.obtenerPersonas();
+      }
     });
   }
 
