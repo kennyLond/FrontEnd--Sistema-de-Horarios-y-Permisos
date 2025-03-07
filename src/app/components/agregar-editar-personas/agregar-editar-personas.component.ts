@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { PersonaService } from '../../services/persona.service';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Dialog } from '@angular/cdk/dialog';
 
 
 
@@ -33,11 +34,12 @@ export class AgregarEditarPersonasComponent {
   form: FormGroup;
   maxDate: Date;
   loading: boolean = false;
+  operacion: string = 'Agregar ';
+  id: number | undefined;
 
   constructor(public dialogRef: MatDialogRef<AgregarEditarPersonasComponent>,
-    private fb:FormBuilder, private _personaService: PersonaService,  private _snackBar: MatSnackBar, private dateAdapter: DateAdapter<any>) {
+    private fb:FormBuilder, private _personaService: PersonaService,  private _snackBar: MatSnackBar, private dateAdapter: DateAdapter<any>, @Inject(MAT_DIALOG_DATA) public data: any ) {
       this.maxDate = new Date();
-      this.maxDate =new Date();
       this.form = this.fb.group({
         nombre: ['',[Validators.required,Validators.maxLength(20) ]],
         apellido: ['',Validators.required],
@@ -47,7 +49,29 @@ export class AgregarEditarPersonasComponent {
         fechaNacimiento: [null,Validators.required],
       })
       dateAdapter.setLocale('es');
+      console.log('estoy en el modal', data)
     }
+
+    ngOnInit(): void {
+      this.esEditar(this.id);
+    }
+
+    esEditar(id: number | undefined){
+      if(id !== undefined){
+        this.operacion = 'Editar ';
+        this.getPersona(id);
+      }
+    }
+
+    getPersona(id: number){
+      this._personaService.getPersona(id).subscribe(data => {
+        console.log(data);
+      })
+    }
+
+
+
+
 
   cancelar() {
     this.dialogRef.close(false);

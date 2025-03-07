@@ -82,10 +82,11 @@ export class ListPersonasComponent implements AfterViewInit {
     }
   }
 
-  addEditPersona() {
+  addEditPersona(id?:number) {
     const dialogRef = this.dialog.open(AgregarEditarPersonasComponent, {
       width: '550px',
       disableClose: true,
+      data: {id : id}
     });
 
     dialogRef.afterClosed().subscribe(result => {
