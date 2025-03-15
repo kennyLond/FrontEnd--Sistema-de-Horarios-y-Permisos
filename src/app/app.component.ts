@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle'
-import { ListPersonasComponent } from "./components/list-personas/list-personas.component";
-
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  standalone:true,
-  imports: [ MatSlideToggleModule, ListPersonasComponent],
+  standalone: true,
+  imports: [MatSlideToggleModule, RouterModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'] // ✅ CORREGIDO: "styleUrls" en plural
 })
 export class AppComponent {
   title = 'FronTEndCRUD';

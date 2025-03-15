@@ -4,29 +4,25 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import {MatSelectModule} from '@angular/material/select';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DateAdapter, provideNativeDateAdapter } from '@angular/material/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Persona } from '../../interfaces/persona';
 import { CommonModule } from '@angular/common';
 import { PersonaService } from '../../services/persona.service';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Dialog } from '@angular/cdk/dialog';
-
-
-
-
 
 @Component({
   selector: 'app-agregar-editar-personas',
   standalone: true, // Indica que es un componente independiente
-  imports: [MatDialogModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatIconModule, MatSelectModule,MatDatepickerModule,
-    ReactiveFormsModule,CommonModule,MatProgressSpinnerModule],
+  imports: [MatDialogModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatIconModule, MatSelectModule, MatDatepickerModule,
+    ReactiveFormsModule, CommonModule, MatProgressSpinnerModule],
   providers: [provideNativeDateAdapter()],
   templateUrl: './agregar-editar-personas.component.html',
-  styleUrl: './agregar-editar-personas.component.css'
+  styleUrls: ['./agregar-editar-personas.component.css']
 })
 export class AgregarEditarPersonasComponent {
 
@@ -38,71 +34,101 @@ export class AgregarEditarPersonasComponent {
   id: number | undefined;
 
   constructor(public dialogRef: MatDialogRef<AgregarEditarPersonasComponent>,
-    private fb:FormBuilder, private _personaService: PersonaService,  private _snackBar: MatSnackBar, private dateAdapter: DateAdapter<any>, @Inject(MAT_DIALOG_DATA) public data: any ) {
-      this.maxDate = new Date();
-      this.form = this.fb.group({
-        nombre: ['',[Validators.required,Validators.maxLength(20) ]],
-        apellido: ['',Validators.required],
-        correo: ['', [Validators.required, Validators.email]],
-        tipoDocumento: [null ,Validators.required],
-        documento: [null,[Validators.required,Validators.pattern("^[0-9]*$")]],
-        fechaNacimiento: [null,Validators.required],
-      })
-      dateAdapter.setLocale('es');
-      console.log('estoy en el modal', data)
+    private fb: FormBuilder, private _personaService: PersonaService, private _snackBar: MatSnackBar, private dateAdapter: DateAdapter<any>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.maxDate = new Date();
+    this.form = this.fb.group({
+      nombre: ['', [Validators.required, Validators.maxLength(20)]],
+      apellido: ['', Validators.required],
+      correo: ['', [Validators.required, Validators.email]],
+      tipoDocumento: [null, Validators.required],
+      documento: [null, [Validators.required, Validators.pattern("^[0-9]*$")]],
+      fechaNacimiento: [null, Validators.required],
+    });
+    dateAdapter.setLocale('es');
+  }
+
+  ngOnInit(): void {
+    this.id = this.data?.id;
+    this.esEditar(this.id);
+  }
+
+  esEditar(id: number | undefined) {
+    if (id !== undefined) {
+      this.operacion = 'Editar ';
+      this.getPersona(id);
     }
+  }
 
-    ngOnInit(): void {
-      this.esEditar(this.id);
-    }
-
-    esEditar(id: number | undefined){
-      if(id !== undefined){
-        this.operacion = 'Editar ';
-        this.getPersona(id);
-      }
-    }
-
-    getPersona(id: number){
-      this._personaService.getPersona(id).subscribe(data => {
-        console.log(data);
-      })
-    }
-
-
-
-
+  // Modificación aquí: convertir la fecha de nacimiento que viene del backend a un objeto Date
+  getPersona(id: number) {
+    this._personaService.getPersona(id).subscribe(data => {
+      const fechaNacimiento = new Date(data.fechaNacimiento); // Convirtiendo a Date
+      this.form.setValue({
+        nombre: data.nombre,
+        apellido: data.apellido,
+        correo: data.correo,
+        tipoDocumento: data.tipoDocumento,
+        documento: data.documento,
+        fechaNacimiento: fechaNacimiento, // Asignando un objeto Date
+      });
+    });
+  }
 
   cancelar() {
     this.dialogRef.close(false);
   }
-addEditPersona(){
 
-  if(this.form.invalid){
-    return;
-  }
-  /*tambien podemos hacerlo con const nombre =this.form.value.nombre; */
-  const persona: Persona = {
-    nombre: this.form.value.nombre,
-    apellido: this.form.value.apellido,
-    correo: this.form.value.correo,
-    tipoDocumento: this.form.value.tipoDocumento,
-    documento: this.form.value.documento,
-    fechaNacimiento: this.form.value.fechaNacimiento.toISOString().slice(0,10)
-  }
+  addEditPersona() {
+    if (this.form.invalid) {
+      return;
+    }
 
-  this.loading = true;
+    let fechaNacimiento = this.form.value.fechaNacimiento;
 
-  this._personaService.addPersona(persona).subscribe(() =>{
+    // Modificación aquí: Verificar si la fechaNacimiento es un string y convertirla a un objeto Date si es necesario
+    if (typeof fechaNacimiento === 'string') {
+      fechaNacimiento = new Date(fechaNacimiento);
+    }
+
+    // Asegurarnos de que la fecha es un objeto Date válido antes de usar .toISOString()
+    if (fechaNacimiento instanceof Date && !isNaN(fechaNacimiento.getTime())) {
+      fechaNacimiento = fechaNacimiento.toISOString().slice(0, 10); // Convertir a formato ISO (YYYY-MM-DD)
+    } else {
+      console.error("La fecha de nacimiento no es válida");
+      return;
+    }
+
+    const persona: Persona = {
+      nombre: this.form.value.nombre,
+      apellido: this.form.value.apellido,
+      correo: this.form.value.correo,
+      tipoDocumento: this.form.value.tipoDocumento,
+      documento: this.form.value.documento,
+      fechaNacimiento: fechaNacimiento // La fecha ya está en formato ISO
+    };
+
+    this.loading = true;
+
+    if (this.id == undefined) {
+      // Agregar
+      this._personaService.addPersona(persona).subscribe(() => {
+        this.mensajeExito('agregada');
+      });
+    } else {
+      // Es editar
+      this._personaService.updatePersona(this.id, persona).subscribe(data => {
+        this.mensajeExito('actualizada');
+      });
+    }
+
     this.loading = false;
-    this.mensajeExito();
     this.dialogRef.close(true);
-  })
-}
-mensajeExito() {
-  this._snackBar.open('La persona fue agregada con éxito', '', {
-    duration: 2000
-  });
-}
+  }
+
+  mensajeExito(operacion: string) {
+    this._snackBar.open(`La persona fue ${operacion} con éxito`, '', {
+      duration: 2000
+    });
+  }
 
 }

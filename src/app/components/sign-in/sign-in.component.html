@@ -1,0 +1,44 @@
+<!-- Contenedor principal -->
+<div class="wrapper">
+
+    <!-- Muestra el formulario solo cuando 'loading' es falso -->
+    <div *ngIf="!loading" class="body">
+
+        <!-- Imagen de login -->
+        <img class="logo" src="../../../assets/img/login-avatar.png" alt="img login">
+
+        <!-- Título del formulario -->
+        <h3>Registrar Usuario</h3>
+
+        <!-- Campo de entrada para el nombre de usuario -->
+        <div class="form-floating mb-3 mt-3">
+            <input type="text" [(ngModel)]="username" class="form-control" placeholder="Ingrese usuario">
+            <label>Usuario</label>
+        </div>
+
+        <!-- Campo de entrada para la contraseña -->
+        <div class="form-floating mb-3">
+            <input type="password" [(ngModel)]="password" class="form-control" placeholder="Ingrese password">
+            <label>Password</label>
+        </div>
+
+        <!-- Campo de entrada para confirmar la contraseña -->
+        <div class="form-floating mb-3">
+            <input type="password" [(ngModel)]="confirmPassword" class="form-control" placeholder="Ingrese password de nuevo">
+            <label>Repetir Password</label>
+        </div>
+
+        <!-- Botón para enviar el formulario -->
+        <div class="d-grid gap-2 mb-3">
+            <button type="button" (click)="addUser()" class="btn btn-primary btn-lg">Aceptar</button>
+        </div>
+
+        <!-- Enlace para volver a la página de login -->
+        <a routerLink="/login">Volver</a>
+
+    </div>
+
+    <!-- Muestra un spinner de carga mientras 'loading' es verdadero -->
+    <app-spinner *ngIf="loading"></app-spinner>
+
+</div>
