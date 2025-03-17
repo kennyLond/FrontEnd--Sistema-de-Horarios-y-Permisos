@@ -4,7 +4,7 @@ table{
 
 mat-form-field {
 font-size: 14px;
-width: 90%;
+width: 100%;
 }
 
 .btnEdit, .btnDelete {
@@ -13,12 +13,12 @@ width: 90%;
 }
 
 .btnEdit {
-    color: #49ceff;
+    color: black;
 
 }
 
 .btnDelete{
-    color: red;
+    color: black;
 
 } 
 button{

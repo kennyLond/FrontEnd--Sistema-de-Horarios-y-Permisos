@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router'; // ✅ Se agregó RouterLink
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../../interfaces/user';
 import { ErrorService } from '../../services/error.service';
@@ -15,7 +15,7 @@ import { ToastrModule } from 'ngx-toastr';
   standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  imports: [CommonModule, FormsModule, SpinnerComponent, ToastrModule] // ✅ Se agregó ToastrModule
+  imports: [CommonModule, FormsModule, SpinnerComponent, ToastrModule, RouterLink] // ✅ Se agregó RouterLink
 })
 export class LoginComponent implements OnInit {
   username: string = '';
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void { }
 
   login() {
-    if (this.username.trim() === '' || this.password.trim() === '') { // ✅ Se mejoró la validación
+    if (this.username.trim() === '' || this.password.trim() === '') {
       this.toastr.error('Todos los campos son obligatorios', 'Error');
       return;
     }
