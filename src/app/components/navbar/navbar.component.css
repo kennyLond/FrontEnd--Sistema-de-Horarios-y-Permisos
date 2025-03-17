@@ -1,3 +1,23 @@
+.sidebar {
+    position: fixed; /* Fija el menú a la izquierda */
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100; /* Asegura que esté por encima de otros elementos */
+    padding: 48px 0 0; /* Ajusta el relleno superior */
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1); /* Agrega una sombra */
+}
+
+.sidebar .nav-link {
+    padding: 10px 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+.sidebar .nav-link.active {
+    color: #007bff; /* Color para el enlace activo */
+}
+
 nav{
-    background-color: aqua;
+    background-color: #293042;
 }

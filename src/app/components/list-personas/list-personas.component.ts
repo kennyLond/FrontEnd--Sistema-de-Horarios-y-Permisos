@@ -17,7 +17,6 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Persona } from '../../interfaces/persona';
 import { AgregarEditarPersonasComponent } from '../agregar-editar-personas/agregar-editar-personas.component';
 import { PersonaService } from '../../services/persona.service';
-import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-list-personas',
@@ -26,7 +25,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
     CommonModule, MatToolbarModule, MatCardModule, MatTableModule, 
     MatPaginatorModule, MatSortModule, MatFormFieldModule, MatInputModule, 
     MatIconModule, MatTooltipModule, MatButtonModule, MatDialogModule, 
-    MatProgressBarModule, MatSnackBarModule,NavbarComponent
+    MatProgressBarModule, MatSnackBarModule
   ],
   templateUrl: './list-personas.component.html',
   styleUrls: ['./list-personas.component.css']
