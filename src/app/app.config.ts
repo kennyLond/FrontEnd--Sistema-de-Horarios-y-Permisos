@@ -6,16 +6,20 @@ import { ToastrModule } from 'ngx-toastr';
 import { ListPersonasComponent } from './components/list-personas/list-personas.component';
 import { LoginComponent } from './components/login/login.component';
 import { LayoutComponent } from './layout/layout.component';
-import { SignInComponent } from './components/sign-in/sign-in.component'; // Importa SignInComponent
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import { PermisosComponent } from './components/permisos/permisos.component'; // Importa PermisosComponent
+import { RegistroHorasComponent } from './components/registro-horas/registro-horas.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
-    { path: 'sign-in', component: SignInComponent }, // Añade esta línea
+    { path: 'sign-in', component: SignInComponent },
     {
         path: 'list-personas',
         component: LayoutComponent,
         children: [
             { path: '', component: ListPersonasComponent },
+            { path: 'permisos', component: PermisosComponent },
+            { path: 'registro-horas', component: RegistroHorasComponent } // Agrega la ruta para PermisosComponent
         ],
     },
     { path: '**', redirectTo: 'login', pathMatch: 'full' }

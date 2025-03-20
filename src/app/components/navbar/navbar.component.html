@@ -1,17 +1,23 @@
 <div class="position-sticky pt-3">
     <ul class="nav flex-column">
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" routerLink="/list-personas/permisos">
+                Permisos
+            </a>
+            
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/list-personas">
                 Empleados
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" routerLink="/list-personas/registro-horas">
                 Registro de Horas
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" (click)="logOut()" style="cursor: pointer;">
                 Cerrar Sesión
             </a>
         </li>
