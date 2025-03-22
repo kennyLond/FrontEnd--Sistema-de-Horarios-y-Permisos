@@ -1,6 +1,6 @@
-export interface Permiso{
-    name: string;
-    position: number;
-    weight: number;
-    symbol: string;  
-}
+export interface Permiso {
+    id?: number;
+    idPersona: number;
+    tipoPermiso: string;
+    estado: 'pendiente' | 'aprobado' | 'denegado';
+    }

@@ -1,80 +1,48 @@
 <div class="container">
-    <div class="menu-cards">
-        <div class="card">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Enfermedad</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-            <ul class="list-group">
-                <li class="list-group-item">Asignación de días</li>
-            </ul>
-            <div class="card-body">
-                <a href="#" class="card-link">Solicitar</a>
-            </div>
-        </div>
-
-        <div class="card">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Enfermedad</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-            <ul class="list-group">
-                <li class="list-group-item">Asignación de días</li>
-            </ul>
-            <div class="card-body">
-                <a href="#" class="card-link">Solicitar</a>
-            </div>
-        </div>
-
-        <div class="card">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Enfermedad</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-            <ul class="list-group">
-                <li class="list-group-item">Asignación de días</li>
-            </ul>
-            <div class="card-body">
-                <a href="#" class="card-link">Solicitar</a>
+    <div class="menu-cards row">
+        <div class="col-md-4" *ngFor="let permiso of permisos">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ permiso.tipoPermiso }}</h5>
+                    <p class="card-text">Descripción breve del permiso.</p>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item">Asignación de días</li>
+                </ul>
+                <div class="card-body">
+                    <button class="btn btn-primary" (click)="solicitarPermiso(permiso)">Solicitar</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="tabla">
+    <div class="tabla mt-4">
         <mat-form-field>
-            <mat-label>Filter</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+            <mat-label>Filtrar</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
         </mat-form-field>
 
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-            <ng-container matColumnDef="position">
-                <th mat-header-cell *matHeaderCellDef> No. </th>
-                <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> ID </th>
+                <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
             </ng-container>
 
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef> Name </th>
-                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            <ng-container matColumnDef="tipoPermiso">
+                <th mat-header-cell *matHeaderCellDef> Permiso </th>
+                <td mat-cell *matCellDef="let element"> {{ element.tipoPermiso }} </td>
             </ng-container>
 
-            <ng-container matColumnDef="weight">
-                <th mat-header-cell *matHeaderCellDef> Weight </th>
-                <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="symbol">
-                <th mat-header-cell *matHeaderCellDef> Symbol </th>
-                <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+            <ng-container matColumnDef="estado">
+                <th mat-header-cell *matHeaderCellDef> Estado </th>
+                <td mat-cell *matCellDef="let element"> {{ element.estado }} </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
             <tr class="mat-row" *matNoDataRow>
-                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                <td class="mat-cell" colspan="3">No hay datos que coincidan con "{{input.value}}"</td>
             </tr>
         </table>
     </div>

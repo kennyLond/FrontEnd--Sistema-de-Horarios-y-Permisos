@@ -7,7 +7,7 @@ import { ListPersonasComponent } from './components/list-personas/list-personas.
 import { LoginComponent } from './components/login/login.component';
 import { LayoutComponent } from './layout/layout.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
-import { PermisosComponent } from './components/permisos/permisos.component'; // Importa PermisosComponent
+import { PermisoComponent } from './components/permisos/permisos.component'; // Importa PermisosComponent
 import { RegistroHorasComponent } from './components/registro-horas/registro-horas.component';
 
 export const routes: Routes = [
@@ -18,7 +18,7 @@ export const routes: Routes = [
         component: LayoutComponent,
         children: [
             { path: '', component: ListPersonasComponent },
-            { path: 'permisos', component: PermisosComponent },
+            { path: 'permisos', component: PermisoComponent },
             { path: 'registro-horas', component: RegistroHorasComponent } // Agrega la ruta para PermisosComponent
         ],
     },

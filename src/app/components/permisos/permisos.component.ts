@@ -1,39 +1,80 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatInputModule } from '@angular/material/input';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {Permiso} from '../../interfaces/permiso';
-
-
+import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { PermisoService } from '../../services/permisos.service';
+import { Permiso } from '../../interfaces/permiso';
 
 @Component({
-  selector: 'app-permisos',
+  selector: 'app-permiso',
   standalone: true,
-  imports: [RouterModule, MatFormFieldModule, MatInputModule, MatTableModule], // Agregué MatTableModule
   templateUrl: './permisos.component.html',
-  styleUrls: ['./permisos.component.css']
+  styleUrls: ['./permisos.component.css'],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSnackBarModule,
+    MatButtonModule
+  ],
+  providers: [PermisoService] // Proporciona el servicio aquí
 })
-export class PermisosComponent {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-
-  ELEMENT_DATA: Permiso[] = [
-    { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-    { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-    { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-    { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-    { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-    { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-    { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-    { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-    { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-    { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' }
+export class PermisoComponent implements OnInit {
+  permisos: Permiso[] = [
+    { id: 1, idPersona: 101, tipoPermiso: 'Enfermedad', estado: 'pendiente' },
+    { id: 2, idPersona: 102, tipoPermiso: 'Vacaciones', estado: 'pendiente' },
+    { id: 3, idPersona: 103, tipoPermiso: 'Día Personal', estado: 'pendiente' }
   ];
 
-  dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+  displayedColumns: string[] = ['id', 'tipoPermiso', 'estado'];
+  dataSource = new MatTableDataSource<Permiso>();
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  @ViewChild('input') input!: HTMLInputElement;
+
+  constructor(private permisoService: PermisoService, private snackBar: MatSnackBar) {}
+
+  ngOnInit(): void {
+    this.obtenerPermisos();
+  }
+
+  obtenerPermisos(): void {
+    this.permisoService.getPermisos().subscribe({
+      next: (data) => {
+        this.dataSource.data = data;
+      },
+      error: () => {
+        this.mostrarMensaje('Error al cargar los permisos');
+      }
+    });
+  }
+
+  solicitarPermiso(permiso: Permiso): void {
+    const nuevoPermiso: Permiso = {
+      ...permiso,
+      estado: 'pendiente' as 'pendiente' // Forzar el tipo correcto
+    };
+
+    this.permisoService.solicitarPermiso(nuevoPermiso).subscribe({
+      next: () => {
+        this.obtenerPermisos();
+        this.mostrarMensaje('Permiso solicitado con éxito');
+      },
+      error: () => {
+        this.mostrarMensaje('Error al solicitar el permiso');
+      }
+    });
+  }
+
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.dataSource.filter = filterValue;
+  }
+
+  private mostrarMensaje(mensaje: string): void {
+    this.snackBar.open(mensaje, '', { duration: 2000 });
   }
 }
