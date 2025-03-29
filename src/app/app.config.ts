@@ -22,7 +22,7 @@ export const routes: Routes = [
             { path: 'registro-horas', component: RegistroHorasComponent } // Agrega la ruta para PermisosComponent
         ],
     },
-    { path: '**', redirectTo: 'login', pathMatch: 'full' }
+    { path: '**', redirectTo: 'login', pathMatch: 'full'}
 ];
 
 export const appConfig: ApplicationConfig = {
