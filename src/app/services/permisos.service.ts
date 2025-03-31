@@ -1,29 +1,19 @@
-import { environment } from '../../enviroments/environments'
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Permiso } from '../interfaces/permiso';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PermisoService {
-  private apiUrl: string = `${environment.apiUrl}/api/permisos/`; // ✅ Corrección en la URL
+export class PermisosService {
 
-  constructor(private http: HttpClient) {}
+  // URL del backend donde se obtiene la lista de permisos
+  private apiUrl = 'http://localhost:3000/api/permisos'; // Ajusta la URL según tu configuración
 
-  // Obtener permisos desde la API
-  getPermisos(): Observable<Permiso[]> {
-    return this.http.get<Permiso[]>(this.apiUrl);
-  }
+  constructor(private http: HttpClient) { }
 
-  // Solicitar un nuevo permiso
-  solicitarPermiso(permiso: Permiso): Observable<void> {
-    return this.http.post<void>(this.apiUrl, permiso);
-  }
-
-  // Actualizar el estado de un permiso
-  actualizarEstado(id: number, estado: 'pendiente' | 'aprobado' | 'denegado'): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${id}`, { estado }); // ✅ Se agregó `/` antes del id
+  // Método para obtener la lista de permisos con información de la persona
+  obtenerPermisos(): Observable<any> {
+    return this.http.get<any>(this.apiUrl);
   }
 }
