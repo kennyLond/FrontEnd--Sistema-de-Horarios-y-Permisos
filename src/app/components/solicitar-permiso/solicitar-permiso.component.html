@@ -1,0 +1,16 @@
+<div class="card-container">
+  <mat-card *ngFor="let permiso of permisos">
+    <mat-card-header>
+      <mat-card-title>{{ permiso.tipoPermiso }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ permiso.descripcion }}</p>
+      <p>Días: {{ permiso.dias }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="solicitarPermiso(permiso)">Solicitar</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+

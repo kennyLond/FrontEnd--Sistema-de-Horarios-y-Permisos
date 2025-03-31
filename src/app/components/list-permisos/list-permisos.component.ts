@@ -1,3 +1,4 @@
+import { SolicitarPermisoComponent } from '../../components/solicitar-permiso/solicitar-permiso.component'
 import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -23,7 +24,7 @@ import { Permiso } from '../../interfaces/permiso'
         CommonModule, MatToolbarModule, MatCardModule, MatTableModule, 
         MatPaginatorModule, MatSortModule, MatFormFieldModule, MatInputModule, 
         MatIconModule, MatTooltipModule, MatButtonModule, MatDialogModule, 
-        MatProgressBarModule, MatSnackBarModule
+        MatProgressBarModule, MatSnackBarModule, SolicitarPermisoComponent
     ],
     templateUrl: './list-permisos.component.html',
     styleUrls: ['./list-permisos.component.css']

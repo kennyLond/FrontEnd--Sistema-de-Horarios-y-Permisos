@@ -1,0 +1,11 @@
+.card-container {
+  display: flex;
+  flex-wrap: wrap; /* Esto asegura que las tarjetas se ajusten en varias líneas si el espacio es insuficiente */
+  gap: 16px; /* Opcional: ajusta el espacio entre las tarjetas */
+  margin-top: 40px;
+}
+
+mat-card {
+  flex: 1 1 30%; /* Las tarjetas ocuparán el 30% del ancho disponible, ajustable */
+  box-sizing: border-box; /* Asegura que el padding y margin no afecten el tamaño */
+}
