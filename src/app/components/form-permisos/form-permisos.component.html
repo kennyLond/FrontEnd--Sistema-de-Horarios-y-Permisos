@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>{{ operacion }} Permiso</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="addEditPermiso()">
+    <div class="form-grid">
+      <mat-form-field appearance="fill">
+        <mat-label>Persona</mat-label>
+        <input matInput formControlName="personaId" [value]="data?.persona_id" readonly />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Tipo de Permiso</mat-label>
+        <input matInput formControlName="tipoPermiso" [value]="getTipoPermisoNombre(data?.tipo_permiso)" readonly />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Descripción</mat-label>
+        <input matInput formControlName="descripcion" [value]="data?.descripcion" readonly />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Estado</mat-label>
+        <input matInput formControlName="estadoPermiso" value="Pendiente" readonly />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Fecha de Solicitud</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="fechaSolicitud" [max]="maxDate" />
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="documento-field">
+        <mat-label>Documento</mat-label>
+        <input matInput formControlName="documento" [value]="documentName" readonly />
+      </mat-form-field>
+
+      <div class="file-upload">
+        <input type="file" (change)="onFileSelected($event)" id="fileInput" class="file-input" />
+        <label for="fileInput" mat-raised-button class="upload-button">Subir archivo</label>
+      </div>
+
+      <div class="spinner-container">
+        <mat-spinner *ngIf="loading" [diameter]="30"></mat-spinner>
+      </div>
+    </div>
+
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="cancelar()">Cancelar</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="loading">
+        {{ operacion }} Permiso
+      </button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

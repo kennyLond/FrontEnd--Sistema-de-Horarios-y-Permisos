@@ -1,5 +1,4 @@
 <div class="card-container">
- 
   <mat-card *ngFor="let permiso of permisosFiltrados">
     <mat-card-header>
       <mat-card-title>{{ permiso.tipoPermiso }}</mat-card-title>
@@ -16,8 +15,4 @@
   <mat-form-field>
     <input matInput placeholder="Buscar por ID" [(ngModel)]="busquedaId">
   </mat-form-field>
-
-  <input type="file" (change)="onFileSelected($event)">
-
-
 </div>

@@ -80,4 +80,5 @@ export class ListPermisosComponent implements OnInit, AfterViewInit {
     private mostrarMensaje(mensaje: string): void {
         this.snackBar.open(mensaje, '', { duration: 2000 });
     }
+    
 }

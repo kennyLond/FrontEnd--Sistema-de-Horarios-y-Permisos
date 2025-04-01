@@ -1,0 +1,42 @@
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  
+  .file-upload {
+    display: flex;
+    align-items: center;
+  }
+  
+  .file-input {
+    display: none;
+  }
+  
+  .upload-button {
+    background-color: #4caf50; /* Color verde */
+    color: white;
+  }
+  
+  .spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-column: 1 / -1;
+  }
+  
+  mat-dialog-actions {
+    margin-top: 20px;
+  }
+  
+  .documento-field .mat-form-field-underline {
+    display: none; /* Elimina la línea inferior */
+  }
+  
+  .documento-field .mat-form-field-wrapper {
+    padding-bottom: 0; /* Elimina el espacio inferior */
+  }
+  
+  .documento-field .mat-form-field-infix {
+    padding-top: 8px; /* Ajusta el padding superior */
+  }

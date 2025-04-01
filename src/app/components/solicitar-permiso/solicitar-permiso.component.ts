@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog'; // Importamos MatDialog
+import { FormPermisosComponent } from '../form-permisos/form-permisos.component'; // Importamos el componente de formulario
 
 @Component({
   selector: 'app-solicitar-permiso',
@@ -21,18 +23,25 @@ export class SolicitarPermisoComponent {
   ];
 
   busquedaId: number | null = null;
-  selectedFile: File | null = null;
+
+  constructor(private dialog: MatDialog) {} // Inyectamos MatDialog
 
   get permisosFiltrados() {
     return this.busquedaId ? this.permisos.filter(permiso => permiso.id === this.busquedaId) : this.permisos;
   }
 
   solicitarPermiso(permiso: any) {
-    console.log(`Permiso solicitado: ${permiso.tipoPermiso}`);
-  }
+    // Abrimos el diálogo y pasamos los datos del permiso
+    const dialogRef = this.dialog.open(FormPermisosComponent, {
+      data: permiso // Pasamos los datos al formulario
+    });
 
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
-    console.log('Archivo seleccionado:', this.selectedFile);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Formulario cerrado con éxito');
+      } else {
+        console.log('Formulario cerrado sin cambios');
+      }
+    });
   }
 }
