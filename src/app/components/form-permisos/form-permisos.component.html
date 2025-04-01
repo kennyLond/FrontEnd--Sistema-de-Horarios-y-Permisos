@@ -4,28 +4,18 @@
   <form [formGroup]="form" (ngSubmit)="addEditPermiso()">
     <div class="form-grid">
       <mat-form-field appearance="fill">
-        <mat-label>Persona</mat-label>
-        <input matInput formControlName="personaId" [value]="data?.persona_id" readonly />
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="id" />
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Tipo de Permiso</mat-label>
-        <input matInput formControlName="tipoPermiso" [value]="getTipoPermisoNombre(data?.tipo_permiso)" readonly />
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Descripción</mat-label>
-        <input matInput formControlName="descripcion" [value]="data?.descripcion" readonly />
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Estado</mat-label>
-        <input matInput formControlName="estadoPermiso" value="Pendiente" readonly />
+        <input matInput formControlName="tipo_permiso" [value]="data?.tipo_permiso" readonly />
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Fecha de Solicitud</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="fechaSolicitud" [max]="maxDate" />
+        <input matInput [matDatepicker]="picker" formControlName="fecha_solicitud" [max]="maxDate" />
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker touchUi #picker></mat-datepicker>
       </mat-form-field>

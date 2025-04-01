@@ -42,7 +42,7 @@ export class FormPermisosComponent {
   loading: boolean = false;
   maxDate: Date;
   documentName: string = '';
-  operacion: string = 'Solicitar ';
+  operacion: string = 'Solicitar';
   id: number | undefined;
   selectedFile: File | null = null;
 
@@ -56,17 +56,13 @@ export class FormPermisosComponent {
   ) {
     this.maxDate = new Date();
     this.form = this.fb.group({
-      personaId: [this.data?.persona_id, Validators.required],
-      tipoPermiso: [this.data?.tipo_permiso, Validators.required],
-      descripcion: [this.data?.descripcion, Validators.required],
-      estadoPermiso: ['pendiente', Validators.required], //estado siempre pendiente
-      fechaSolicitud: [null, Validators.required],
-      documento: [null] // no se necesita validador required, ya que se sube con un input type file, y se envia por formData
+      id: [this.data?.id, Validators.required],
+      tipo_permiso: [{ value: this.data?.tipo_permiso, disabled: true }, Validators.required],
+      fecha_solicitud: [null, Validators.required],
+      documento: [null]
     });
     dateAdapter.setLocale('es');
   }
-
-  ngOnInit(): void {}
 
   cancelar() {
     this.dialogRef.close(false);
@@ -79,62 +75,50 @@ export class FormPermisosComponent {
     }
   }
 
-  subirArchivo(): void {
-    console.log("Archivo seleccionado:", this.documentName);
-  }
-
-  getTipoPermisoNombre(tipoPermiso: string): string {
-    switch (tipoPermiso) {
-      case 'vacaciones':
-        return 'Vacaciones';
-      case 'enfermedad':
-        return 'Enfermedad';
-      case 'familiar':
-        return 'Familiar';
-      default:
-        return tipoPermiso;
-    }
-  }
-
   addEditPermiso() {
     if (this.form.invalid) {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('personaId', this.form.value.personaId);
-    formData.append('tipoPermiso', this.getTipoPermisoNombre(this.form.value.tipoPermiso));
-    formData.append('descripcion', this.form.value.descripcion);
-    formData.append('estadoPermiso', this.form.value.estadoPermiso);
-    formData.append('fechaSolicitud', this.form.value.fechaSolicitud);
-    if (this.selectedFile) {
-      formData.append('documento', this.selectedFile, this.selectedFile.name);
-    }
+    this._permisosService.verificarPersona(this.form.value.id).subscribe({
+      next: (existe: boolean) => {
+        if (!existe) {
+          this.mensajeError('La persona no existe.');
+          return;
+        }
 
-    this.loading = true;
+        const formData = new FormData();
+        formData.append('id', this.form.value.id);
+        formData.append('tipo_permiso', this.data.tipo_permiso);
+        formData.append('fecha_solicitud', this.form.value.fecha_solicitud);
+        if (this.selectedFile) {
+          formData.append('documento', this.selectedFile, this.selectedFile.name);
+        }
 
-    this._permisosService.subirDocumento(formData).subscribe({
-      next: (response: any) => {
-        this.mensajeExito('Permiso');
-        this.loading = false;
-        this.dialogRef.close(true);
+        this.loading = true;
+        this._permisosService.subirDocumento(formData).subscribe({
+          next: () => {
+            this.mensajeExito('Permiso solicitado');
+            this.loading = false;
+            this.dialogRef.close(true);
+          },
+          error: () => {
+            this.loading = false;
+            this.mensajeError('Error al solicitar el permiso.');
+          }
+        });
       },
-      error: (error: any) => {
-        this.mensajeError('Permiso');
-        this.loading = false;
+      error: () => {
+        this.mensajeError('Error al verificar la persona.');
       }
     });
   }
 
-  mensajeExito(operacion: string) {
-    this._snackBar.open(`${operacion} realizado con éxito.`, 'Cerrar', {
-      duration: 3000
-    });
+  mensajeExito(mensaje: string) {
+    this._snackBar.open(mensaje, 'Cerrar', { duration: 3000 });
   }
 
-  mensajeError(operacion: string) {
-    this._snackBar.open(`${operacion} no pudo realizarse.`, 'Cerrar', {
-      duration: 3000
-    });
+  mensajeError(mensaje: string) {
+    this._snackBar.open(mensaje, 'Cerrar', { duration: 3000 });
   }
 }
