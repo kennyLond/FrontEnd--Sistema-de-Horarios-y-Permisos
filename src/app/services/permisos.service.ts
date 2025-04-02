@@ -14,28 +14,58 @@ export class PermisosService {
   constructor(private http: HttpClient) { }
 
   obtenerPermisos(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+    return this.http.get<any>(this.apiUrl).pipe(
+      catchError(error => this.handleError(error))
+    );
   }
 
   verificarPersona(id: number): Observable<boolean> {
-    return this.http.get<boolean>(`${this.personaApiUrl}/${id}`)
-      .pipe(
-        catchError(() => throwError('La persona no existe.'))
-      );
+    if (!id || id <= 0) {
+      return throwError(() => new Error('ID de persona inválido.'));
+    }
+
+    return this.http.get<boolean>(`${this.personaApiUrl}/${id}`).pipe(
+      catchError(error => this.handleError(error))
+    );
   }
 
   crearPermiso(permiso: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, permiso)
-      .pipe(catchError(this.handleError));
+    if (!permiso) {
+      return throwError(() => new Error('Datos del permiso no proporcionados.'));
+    }
+
+    return this.http.post<any>(this.apiUrl, permiso).pipe(
+      catchError(error => this.handleError(error))
+    );
   }
 
-  private handleError(error: HttpErrorResponse) {
+  private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'Algo salió mal; por favor intente nuevamente más tarde.';
-    if (error.status === 404) {
-      errorMessage = 'La persona no existe.';
-    } else if (error.status === 409) {
-      errorMessage = 'Ya existe un permiso de este tipo para esta persona.';
+
+    if (error.error instanceof ErrorEvent) {
+      // Error del lado del cliente
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Error del backend
+      switch (error.status) {
+        case 400:
+          errorMessage = 'Solicitud incorrecta. Verifique los datos enviados.';
+          break;
+        case 404:
+          errorMessage = 'La persona no existe.';
+          break;
+        case 409:
+          errorMessage = 'Ya existe un permiso de este tipo para esta persona.';
+          break;
+        case 500:
+          errorMessage = 'Error interno del servidor. Intente más tarde.';
+          break;
+        default:
+          errorMessage = error.error?.message || errorMessage;
+          break;
+      }
     }
-    return throwError(errorMessage);
+
+    return throwError(() => new Error(errorMessage));
   }
 }

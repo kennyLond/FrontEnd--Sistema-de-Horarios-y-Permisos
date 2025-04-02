@@ -42,7 +42,6 @@ export class FormPermisosComponent {
   loading: boolean = false;
   maxDate: Date;
   operacion: string = 'Solicitar';
-  id: number | undefined;
 
   constructor(
     public dialogRef: MatDialogRef<FormPermisosComponent>,
@@ -54,10 +53,11 @@ export class FormPermisosComponent {
   ) {
     this.maxDate = new Date();
     this.form = this.fb.group({
-      id: [this.data?.id, Validators.required],
-      tipo_permiso: [{ value: this.data?.tipo_permiso, disabled: true }, Validators.required],
-      fecha_solicitud: [null, Validators.required]
+      id: [this.data?.id, [Validators.required, Validators.pattern('^[0-9]+$')]],
+      tipo_permiso: [{ value: this.data?.tipo_permiso, disabled: true }],
+      fecha_solicitud: [this.data?.fecha_solicitud || '', Validators.required]
     });
+
     dateAdapter.setLocale('es');
   }
 
@@ -67,10 +67,17 @@ export class FormPermisosComponent {
 
   addEditPermiso() {
     if (this.form.invalid) {
+      this.mensajeError('Por favor, completa todos los campos correctamente.');
       return;
     }
 
-    this._permisosService.verificarPersona(this.form.value.id).subscribe({
+    const id = this.form.value.id;
+    if (!id) {
+      this.mensajeError('El ID es inválido.');
+      return;
+    }
+
+    this._permisosService.verificarPersona(id).subscribe({
       next: (existe: boolean) => {
         if (!existe) {
           this.mensajeError('La persona no existe.');
@@ -78,9 +85,9 @@ export class FormPermisosComponent {
         }
 
         this.loading = true;
-        this._permisosService.crearPermiso(this.form.value).subscribe({
+        this._permisosService.crearPermiso(this.form.getRawValue()).subscribe({
           next: () => {
-            this.mensajeExito('Permiso solicitado');
+            this.mensajeExito('Permiso solicitado correctamente.');
             this.loading = false;
             this.dialogRef.close(true);
           },
@@ -97,10 +104,10 @@ export class FormPermisosComponent {
   }
 
   mensajeExito(mensaje: string) {
-    this._snackBar.open(mensaje, 'Cerrar', { duration: 3000 });
+    this._snackBar.open(mensaje, '', { duration: 3000 });
   }
 
   mensajeError(mensaje: string) {
-    this._snackBar.open(mensaje, 'Cerrar', { duration: 3000 });
+    this._snackBar.open(mensaje, '', { duration: 3000 });
   }
 }
