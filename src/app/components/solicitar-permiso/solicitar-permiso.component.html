@@ -1,18 +1,47 @@
 <div class="card-container">
-  <mat-card *ngFor="let permiso of permisosFiltrados">
+  <mat-card class="permiso-card">
     <mat-card-header>
-      <mat-card-title>{{ permiso.tipoPermiso }}</mat-card-title>
+      <mat-card-title>Permiso de Vacaciones</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <p>{{ permiso.descripcion }}</p>
-      <p>Días: {{ permiso.dias }}</p>
+      <div class="permiso-details">
+        <p><strong>Descripción:</strong> Permiso para tomar vacaciones.</p>
+        <p><strong>Días:</strong> 15</p>
+      </div>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="solicitarPermiso(permiso)">Solicitar</button>
+      <button mat-raised-button color="primary" (click)="solicitarPermisoVacaciones()">Solicitar</button>
     </mat-card-actions>
   </mat-card>
 
-  <mat-form-field>
-    <input matInput placeholder="Buscar por ID" [(ngModel)]="busquedaId">
-  </mat-form-field>
+  <mat-card class="permiso-card">
+    <mat-card-header>
+      <mat-card-title>Permiso por Enfermedad</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="permiso-details">
+        <p><strong>Descripción:</strong> Permiso por enfermedad justificada.</p>
+        <p><strong>Días:</strong> 3</p>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="solicitarPermisoEnfermedad()">Solicitar</button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card class="permiso-card">
+    <mat-card-header>
+      <mat-card-title>Permiso Personal</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="permiso-details">
+        <p><strong>Descripción:</strong> Permiso por asuntos personales.</p>
+        <p><strong>Días:</strong> 10</p>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="solicitarPermisoPersonal()">Solicitar</button>
+    </mat-card-actions>
+  </mat-card>
+  
 </div>

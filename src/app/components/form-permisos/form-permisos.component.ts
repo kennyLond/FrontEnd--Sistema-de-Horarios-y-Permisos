@@ -53,11 +53,10 @@ export class FormPermisosComponent {
   ) {
     this.maxDate = new Date();
     this.form = this.fb.group({
-      id: [this.data?.id, [Validators.required, Validators.pattern('^[0-9]+$')]],
-      tipo_permiso: [{ value: this.data?.tipo_permiso, disabled: true }],
+      id: [this.data?.id || '', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      tipo_permiso: [{ value: this.data?.tipo_permiso || '', disabled: true }],
       fecha_solicitud: [this.data?.fecha_solicitud || '', Validators.required]
     });
-
     dateAdapter.setLocale('es');
   }
 
@@ -71,7 +70,7 @@ export class FormPermisosComponent {
       return;
     }
 
-    const id = this.form.value.id;
+    const id = Number(this.form.value.id);
     if (!id) {
       this.mensajeError('El ID es inválido.');
       return;
@@ -84,14 +83,24 @@ export class FormPermisosComponent {
           return;
         }
 
+        const permiso = {
+          id: id,
+          tipo_permiso: this.data.tipo_permiso,
+          fecha_solicitud: this.form.value.fecha_solicitud instanceof Date
+            ? this.form.value.fecha_solicitud.toISOString().split('T')[0]
+            : this.form.value.fecha_solicitud
+        };
+
+        console.log('Enviando permiso:', permiso);
         this.loading = true;
-        this._permisosService.crearPermiso(this.form.getRawValue()).subscribe({
+        this._permisosService.crearPermiso(permiso).subscribe({
           next: () => {
             this.mensajeExito('Permiso solicitado correctamente.');
             this.loading = false;
             this.dialogRef.close(true);
           },
-          error: () => {
+          error: (err) => {
+            console.error('Error en la petición:', err);
             this.loading = false;
             this.mensajeError('Error al solicitar el permiso.');
           }
