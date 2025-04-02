@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -24,22 +24,9 @@ export class PermisosService {
       );
   }
 
-  subirDocumento(permiso: any): Observable<any> {
-    return this.verificarPersona(permiso.persona_id).pipe(
-      switchMap(() => {
-        const formData = new FormData();
-        formData.append('persona_id', permiso.persona_id);
-        formData.append('tipo_permiso', permiso.tipo_permiso);
-        formData.append('fecha_solicitud', permiso.fecha_solicitud);
-
-        if (permiso.documento) {
-          formData.append('documento', permiso.documento, permiso.documento.name);
-        }
-
-        return this.http.post<any>(this.apiUrl, formData)
-          .pipe(catchError(this.handleError));
-      })
-    );
+  crearPermiso(permiso: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, permiso)
+      .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {

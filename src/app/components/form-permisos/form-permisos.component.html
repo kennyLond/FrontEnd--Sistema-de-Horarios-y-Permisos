@@ -19,20 +19,6 @@
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker touchUi #picker></mat-datepicker>
       </mat-form-field>
-
-      <mat-form-field appearance="fill" class="documento-field">
-        <mat-label>Documento</mat-label>
-        <input matInput formControlName="documento" [value]="documentName" readonly />
-      </mat-form-field>
-
-      <div class="file-upload">
-        <input type="file" (change)="onFileSelected($event)" id="fileInput" class="file-input" />
-        <label for="fileInput" mat-raised-button class="upload-button">Subir archivo</label>
-      </div>
-
-      <div class="spinner-container">
-        <mat-spinner *ngIf="loading" [diameter]="30"></mat-spinner>
-      </div>
     </div>
 
     <mat-dialog-actions align="end">

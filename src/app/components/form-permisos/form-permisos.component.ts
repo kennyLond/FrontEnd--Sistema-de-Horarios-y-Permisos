@@ -41,10 +41,8 @@ export class FormPermisosComponent {
   form: FormGroup;
   loading: boolean = false;
   maxDate: Date;
-  documentName: string = '';
   operacion: string = 'Solicitar';
   id: number | undefined;
-  selectedFile: File | null = null;
 
   constructor(
     public dialogRef: MatDialogRef<FormPermisosComponent>,
@@ -58,21 +56,13 @@ export class FormPermisosComponent {
     this.form = this.fb.group({
       id: [this.data?.id, Validators.required],
       tipo_permiso: [{ value: this.data?.tipo_permiso, disabled: true }, Validators.required],
-      fecha_solicitud: [null, Validators.required],
-      documento: [null]
+      fecha_solicitud: [null, Validators.required]
     });
     dateAdapter.setLocale('es');
   }
 
   cancelar() {
     this.dialogRef.close(false);
-  }
-
-  onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0];
-    if (this.selectedFile) {
-      this.documentName = this.selectedFile.name;
-    }
   }
 
   addEditPermiso() {
@@ -87,16 +77,8 @@ export class FormPermisosComponent {
           return;
         }
 
-        const formData = new FormData();
-        formData.append('id', this.form.value.id);
-        formData.append('tipo_permiso', this.data.tipo_permiso);
-        formData.append('fecha_solicitud', this.form.value.fecha_solicitud);
-        if (this.selectedFile) {
-          formData.append('documento', this.selectedFile, this.selectedFile.name);
-        }
-
         this.loading = true;
-        this._permisosService.subirDocumento(formData).subscribe({
+        this._permisosService.crearPermiso(this.form.value).subscribe({
           next: () => {
             this.mensajeExito('Permiso solicitado');
             this.loading = false;
