@@ -15,7 +15,7 @@ export class PermisosService {
   // Obtener permisos
   obtenerPermisos(): Observable<any> {
     return this.http.get<any>(this.apiUrl).pipe(
-      catchError(error => this.handleError(error)) // ✅ Manejo correcto del error
+      catchError(error => this.handleError(error))
     );
   }
 
@@ -24,46 +24,37 @@ export class PermisosService {
     if (!id || id <= 0) {
       return throwError(() => new Error('ID de persona inválido.'));
     }
-
     return this.http.get<boolean>(`${this.personaApiUrl}/${id}`).pipe(
-      catchError(error => this.handleError(error)) // ✅ Manejo correcto del error
+      catchError(error => this.handleError(error))
     );
   }
 
   // Crear un nuevo permiso
   crearPermiso(permiso: any): Observable<any> {
+    console.log('Permiso recibido en crearPermiso:', permiso); // 🔍 Debug
+
     if (!permiso || !permiso.id || !permiso.tipo_permiso || !permiso.fecha_solicitud) {
       return throwError(() => new Error('Datos del permiso incompletos.'));
     }
-  
+
     // Convertir la fecha al formato correcto "YYYY-MM-DD HH:MM:SS"
-    const fecha = new Date(permiso.fecha_solicitud);
-    const fechaFormateada = fecha.toISOString().slice(0, 19).replace("T", " ");
-  
-    // Clonar el objeto permiso y actualizar la fecha
-    const permisoModificado = { ...permiso, fecha_solicitud: fechaFormateada };
-  
-    console.log('Datos que se envían al backend:', permisoModificado);  // 🔍 Debug
-  
+    try {
+      const fecha = new Date(permiso.fecha_solicitud);
+      if (isNaN(fecha.getTime())) {
+        return throwError(() => new Error('Fecha de solicitud inválida.'));
+      }
+      const fechaFormateada = fecha.toISOString().slice(0, 19).replace("T", " ");
+      permiso.fecha_solicitud = fechaFormateada;
+    } catch (error) {
+      return throwError(() => new Error('Error al procesar la fecha de solicitud.'));
+    }
+
+    console.log('Datos que se envían al backend:', permiso);  // 🔍 Debug
+
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  
-    return this.http.post<any>(this.apiUrl, permisoModificado, { headers }).pipe(
+    return this.http.post<any>(this.apiUrl, permiso, { headers }).pipe(
       catchError(error => this.handleError(error))
     );
-  }
-  
-  
-
-  // Función para formatear la fecha correctamente
-  private formatearFecha(fecha: any): string {
-    if (!fecha) return '';
-
-    const dateObj = new Date(fecha);
-    const year = dateObj.getFullYear();
-    const month = String(dateObj.getMonth() + 1).padStart(2, '0'); // ✅ +1 porque los meses empiezan desde 0
-    const day = String(dateObj.getDate()).padStart(2, '0');
-
-    return `${year}-${month}-${day}`; // ✅ Devuelve solo YYYY-MM-DD
   }
 
   // Manejo de errores centralizado
@@ -91,6 +82,7 @@ export class PermisosService {
           break;
       }
     }
+    console.error('Error en la solicitud:', errorMessage);
     return throwError(() => new Error(errorMessage));
   }
 }

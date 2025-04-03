@@ -54,7 +54,7 @@ export class FormPermisosComponent {
     this.maxDate = new Date();
     this.form = this.fb.group({
       id: [this.data?.id || '', [Validators.required, Validators.pattern('^[0-9]+$')]],
-      tipo_permiso: [{ value: this.data?.tipo_permiso || '', disabled: true }],
+      tipo_permiso: [{ value: this.data?.tipo_permiso || 'pendiente', disabled: true }],
       fecha_solicitud: [this.data?.fecha_solicitud || '', Validators.required]
     });
     dateAdapter.setLocale('es');
@@ -84,12 +84,17 @@ export class FormPermisosComponent {
         }
 
         const permiso = {
-          persona_id: id,  // 🔹 Cambiar "id" por "persona_id"
-          tipo_permiso: this.data.tipo_permiso,
+          persona_id: id,
+          tipo_permiso: this.data?.tipo_permiso || this.form.value.tipo_permiso || 'pendiente',
+          estado_permiso: 'pendiente', // 🔹 Agregar estado_permiso manualmente
+          documento: 'pendiente', // 🔹 Agregar documento manualmente
           fecha_solicitud: this.form.value.fecha_solicitud instanceof Date
-            ? this.form.value.fecha_solicitud.toISOString().split('T')[0]  // Convierte a "YYYY-MM-DD"
+            ? new Date(this.form.value.fecha_solicitud).toISOString().replace('T', ' ').substring(0, 19)
             : this.form.value.fecha_solicitud
         };
+        
+        
+        
         
         console.log('🚀 Datos enviados al backend:', JSON.stringify(permiso, null, 2));
         
