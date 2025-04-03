@@ -84,12 +84,15 @@ export class FormPermisosComponent {
         }
 
         const permiso = {
-          id: id,
+          persona_id: id,  // 🔹 Cambiar "id" por "persona_id"
           tipo_permiso: this.data.tipo_permiso,
           fecha_solicitud: this.form.value.fecha_solicitud instanceof Date
-            ? this.form.value.fecha_solicitud.toISOString().split('T')[0]
+            ? this.form.value.fecha_solicitud.toISOString().split('T')[0]  // Convierte a "YYYY-MM-DD"
             : this.form.value.fecha_solicitud
         };
+        
+        console.log('🚀 Datos enviados al backend:', JSON.stringify(permiso, null, 2));
+        
 
         console.log('Enviando permiso:', permiso);
         this.loading = true;
