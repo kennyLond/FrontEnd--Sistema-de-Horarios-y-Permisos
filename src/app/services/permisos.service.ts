@@ -31,12 +31,14 @@ export class PermisosService {
 
   // Crear un nuevo permiso
   crearPermiso(permiso: any): Observable<any> {
-    console.log('Permiso recibido en crearPermiso:', permiso); // 🔍 Debug
+    console.log('Permiso recibido en crearPermiso:', permiso); //  Debug
 
     if (!permiso || !permiso.persona_id || !permiso.tipo_permiso || !permiso.fecha_solicitud) {
       return throwError(() => new Error('Datos del permiso incompletos.'));
     }
     
+    // Agregar console.log para verificar el valor de tipo_permiso
+    console.log('Tipo de permiso a enviar:', permiso.tipo_permiso);
 
     // Convertir la fecha al formato correcto "YYYY-MM-DD HH:MM:SS"
     try {
@@ -50,7 +52,7 @@ export class PermisosService {
       return throwError(() => new Error('Error al procesar la fecha de solicitud.'));
     }
 
-    console.log('Datos que se envían al backend:', permiso);  // 🔍 Debug
+    console.log('Datos que se envían al backend:', permiso);  //  Debug
 
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(this.apiUrl, permiso, { headers }).pipe(

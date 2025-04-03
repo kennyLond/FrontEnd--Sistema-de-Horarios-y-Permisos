@@ -54,9 +54,11 @@ export class FormPermisosComponent {
     this.maxDate = new Date();
     this.form = this.fb.group({
       id: [null, [Validators.required, Validators.pattern('^[0-9]+$')]],
-      tipo_permiso: [{ value: this.data?.tipo_permiso || 'pendiente', disabled: true }],
+      tipo_permiso: [this.data?.tipo_permiso || '', Validators.required], // ✅ Ahora se enviará correctamente
       fecha_solicitud: [this.data?.fecha_solicitud || '', Validators.required]
     });
+    
+    
     dateAdapter.setLocale('es');
   }
 
@@ -80,6 +82,9 @@ export class FormPermisosComponent {
     const fechaFormateada = new Date(this.form.value.fecha_solicitud)
       .toISOString().slice(0, 10);
 
+    // Agregar console.log para verificar el valor de tipo_permiso
+    console.log('Valor de tipo_permiso:', this.data?.tipo_permiso);
+
     this._permisosService.verificarPersona(id).subscribe({
       next: (existe: boolean) => {
         if (!existe) {
@@ -89,7 +94,7 @@ export class FormPermisosComponent {
 
         const permiso = {
           persona_id: id,
-          tipo_permiso: this.data?.tipo_permiso || this.form.value.tipo_permiso || 'pendiente',
+          tipo_permiso: this.data?.tipo_permiso || 'pendiente', // Usar directamente this.data?.tipo_permiso
           estado_permiso: 'pendiente',
           documento: 'pendiente',
           fecha_solicitud: fechaFormateada

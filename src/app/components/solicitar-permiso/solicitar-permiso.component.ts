@@ -53,9 +53,12 @@ export class SolicitarPermisoComponent implements OnInit {
 
   solicitarPermiso(permiso: Permiso) {
     const dialogRef = this.dialog.open(FormPermisosComponent, {
-      data: permiso,
+      data: { 
+        tipo_permiso: permiso.tipo_permiso, // ✅ Se pasa correctamente el tipo de permiso
+        fecha_solicitud: new Date().toISOString().slice(0, 10) // Fecha actual
+      },
     });
-
+  
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('Formulario cerrado con éxito');
@@ -64,6 +67,7 @@ export class SolicitarPermisoComponent implements OnInit {
       }
     });
   }
+  
 
   solicitarPermisoVacaciones() {
     const permiso = this.permisos[0]; // Permiso de vacaciones

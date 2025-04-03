@@ -10,8 +10,9 @@
 
       <mat-form-field appearance="fill">
         <mat-label>Tipo de Permiso</mat-label>
-        <input matInput formControlName="tipo_permiso" [value]="data?.tipo_permiso" readonly />
+        <input matInput formControlName="tipo_permiso" readonly /> <!-- ✅ Solo lectura en lugar de deshabilitado -->
       </mat-form-field>
+      
 
       <mat-form-field appearance="fill">
         <mat-label>Fecha de Solicitud</mat-label>
