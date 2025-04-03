@@ -1,0 +1,49 @@
+.container {
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
+}
+
+.search-container {
+    margin-bottom: 15px;
+}
+
+.search-container input {
+    padding: 8px;
+    margin-right: 5px;
+}
+
+.buttons-container {
+    margin-bottom: 15px;
+}
+
+button {
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+}
