@@ -53,7 +53,7 @@ export class FormPermisosComponent {
   ) {
     this.maxDate = new Date();
     this.form = this.fb.group({
-      id: [this.data?.id || '', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      id: [null, [Validators.required, Validators.pattern('^[0-9]+$')]],
       tipo_permiso: [{ value: this.data?.tipo_permiso || 'pendiente', disabled: true }],
       fecha_solicitud: [this.data?.fecha_solicitud || '', Validators.required]
     });
@@ -76,6 +76,10 @@ export class FormPermisosComponent {
       return;
     }
 
+    console.log("Fecha antes de enviar:", this.form.value.fecha_solicitud);
+    const fechaFormateada = new Date(this.form.value.fecha_solicitud)
+      .toISOString().slice(0, 10);
+
     this._permisosService.verificarPersona(id).subscribe({
       next: (existe: boolean) => {
         if (!existe) {
@@ -86,20 +90,13 @@ export class FormPermisosComponent {
         const permiso = {
           persona_id: id,
           tipo_permiso: this.data?.tipo_permiso || this.form.value.tipo_permiso || 'pendiente',
-          estado_permiso: 'pendiente', // 🔹 Agregar estado_permiso manualmente
-          documento: 'pendiente', // 🔹 Agregar documento manualmente
-          fecha_solicitud: this.form.value.fecha_solicitud instanceof Date
-            ? new Date(this.form.value.fecha_solicitud).toISOString().replace('T', ' ').substring(0, 19)
-            : this.form.value.fecha_solicitud
+          estado_permiso: 'pendiente',
+          documento: 'pendiente',
+          fecha_solicitud: fechaFormateada
         };
-        
-        
-        
-        
-        console.log('🚀 Datos enviados al backend:', JSON.stringify(permiso, null, 2));
-        
 
-        console.log('Enviando permiso:', permiso);
+        console.log('🚀 Datos enviados al backend:', JSON.stringify(permiso, null, 2));
+
         this.loading = true;
         this._permisosService.crearPermiso(permiso).subscribe({
           next: () => {

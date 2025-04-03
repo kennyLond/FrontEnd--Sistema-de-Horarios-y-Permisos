@@ -33,9 +33,10 @@ export class PermisosService {
   crearPermiso(permiso: any): Observable<any> {
     console.log('Permiso recibido en crearPermiso:', permiso); // 🔍 Debug
 
-    if (!permiso || !permiso.id || !permiso.tipo_permiso || !permiso.fecha_solicitud) {
+    if (!permiso || !permiso.persona_id || !permiso.tipo_permiso || !permiso.fecha_solicitud) {
       return throwError(() => new Error('Datos del permiso incompletos.'));
     }
+    
 
     // Convertir la fecha al formato correcto "YYYY-MM-DD HH:MM:SS"
     try {
