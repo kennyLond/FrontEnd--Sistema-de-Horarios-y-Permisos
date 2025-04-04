@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-registro-horas',
@@ -55,7 +56,7 @@ export class RegistroHorasComponent implements OnInit {
     this.loading = true;
     this.asistenciaService.obtenerAsistencias().subscribe(
       (data) => {
-        this.dataSource.data = data; // Actualizar tabla con datos del backend
+        this.dataSource.data = data;
         this.loading = false;
       },
       (error) => {
@@ -76,7 +77,7 @@ export class RegistroHorasComponent implements OnInit {
     this.asistenciaService.obtenerAsistenciaPorId(this.personaId).subscribe(
       (data) => {
         if (data) {
-          this.dataSource.data = [data]; // Actualizar tabla con el nuevo dato
+          this.dataSource.data = [data];
         } else {
           alert('No se encontró asistencia.');
           this.dataSource.data = [];
@@ -106,10 +107,19 @@ export class RegistroHorasComponent implements OnInit {
       hora_salida: null
     };
 
-    this.asistenciaService.registrarEntrada(nuevaAsistencia).subscribe(() => {
-      alert('Entrada registrada con éxito.');
-      this.buscarAsistencia();
-    });
+    this.asistenciaService.registrarEntrada(nuevaAsistencia).subscribe(
+      () => {
+        alert('Entrada registrada con éxito.');
+        this.buscarAsistencia();
+      },
+      (error) => {
+        if (error instanceof HttpErrorResponse && error.status === 409) {
+          alert('El empleado ya ha registrado sus horas.');
+        } else {
+          alert('Error al registrar la entrada.');
+        }
+      }
+    );
   }
 
   registrarSalida(): void {
@@ -126,7 +136,21 @@ export class RegistroHorasComponent implements OnInit {
 
   applyFilter(event: Event): void {
     let filterValue = (event.target as HTMLInputElement).value;
-    filterValue = filterValue.replace(/\s+/g, '').toLowerCase(); // Elimina espacios
+    filterValue = filterValue.replace(/\s+/g, '').toLowerCase();
     this.dataSource.filter = filterValue;
+  }
+
+  // Función para formatear la hora con AM/PM
+  formatTime(dateTimeString: string | null | undefined): string {
+    if (!dateTimeString) {
+      return '---';
+    }
+    const date = new Date(dateTimeString);
+    let hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // la hora '0' debe ser '12'
+    return `${hours}:${minutes} ${ampm}`;
   }
 }
