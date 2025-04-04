@@ -7,6 +7,10 @@ body {
     overflow: hidden;
 }
 
+.tempo{
+    width: 15%;
+}
+
 .navbar {
     background: linear-gradient(135deg, #00509e, #008cff);
     color: white;
@@ -94,4 +98,16 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     overflow-y: auto;
     height: calc(100vh - 90px);
+}
+
+.empleados{ 
+    width: 16%;
+}
+
+.reloj {
+    width: 12%;
+}
+
+.permiso{
+    width: 11%;
 }
