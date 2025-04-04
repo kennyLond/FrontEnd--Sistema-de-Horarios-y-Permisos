@@ -5,13 +5,13 @@ body {
     display: flex;
     height: 100vh;
     overflow: hidden;
-}
-
-.tempo{
+  }
+  
+  .tempo {
     width: 15%;
-}
-
-.navbar {
+  }
+  
+  .navbar {
     background: linear-gradient(135deg, #00509e, #008cff);
     color: white;
     padding: 15px 20px;
@@ -23,9 +23,9 @@ body {
     left: 0;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     z-index: 1000;
-}
-
-.sidebar {
+  }
+  
+  .sidebar {
     width: 250px;
     background: linear-gradient(135deg, #004080, #0066cc);
     padding-top: 70px;
@@ -38,9 +38,9 @@ body {
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
     justify-content: space-between;
     padding-bottom: 30px;
-}
-
-.sidebar ul {
+  }
+  
+  .sidebar ul {
     list-style: none;
     padding: 0;
     width: 100%;
@@ -48,29 +48,29 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
-}
-
-.sidebar .nav-item {
+  }
+  
+  .sidebar .nav-item {
     width: 100%;
-}
-
-.sidebar .nav-link {
-    display: block;
+  }
+  
+  .sidebar .nav-link {
+    display: flex; /* Cambiado a flex para alinear icono y texto */
+    align-items: center; /* Alinea verticalmente los elementos */
     color: white;
     text-decoration: none;
     padding: 15px;
     font-size: 16px;
-    text-align: center;
     transition: background 0.3s, transform 0.2s;
     border-radius: 5px;
-}
-
-.sidebar .nav-link:hover {
+  }
+  
+  .sidebar .nav-link:hover {
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
-}
-
-.sidebar .logout {
+  }
+  
+  .sidebar .logout {
     background: linear-gradient(135deg, #003366, #00509e);
     color: white;
     font-weight: bold;
@@ -81,13 +81,13 @@ body {
     margin-top: 280px;
     margin-bottom: 20px;
     align-self: center;
-}
-
-.sidebar .logout:hover {
+  }
+  
+  .sidebar .logout:hover {
     background: linear-gradient(135deg, #002244, #004080);
-}
-
-.main-content {
+  }
+  
+  .main-content {
     margin-left: 250px;
     margin-top: 70px;
     padding: 20px;
@@ -98,16 +98,19 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     overflow-y: auto;
     height: calc(100vh - 90px);
-}
-
-.empleados{ 
+  }
+  
+  .empleados {
     width: 16%;
-}
-
-.reloj {
+    margin-right: 10px; /* Agrega espacio entre el icono y el texto */
+  }
+  
+  .reloj {
     width: 12%;
-}
-
-.permiso{
+    margin-right: 10px; /* Agrega espacio entre el icono y el texto */
+  }
+  
+  .permiso {
     width: 11%;
-}
+    margin-right: 10px; /* Agrega espacio entre el icono y el texto */
+  }
