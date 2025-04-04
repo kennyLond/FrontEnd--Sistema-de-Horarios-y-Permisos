@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-solicitar-permiso',
@@ -20,6 +21,7 @@ import { FormsModule } from '@angular/forms';
     MatInputModule,
     FormsModule,
     MatDialogModule,
+    MatSnackBarModule, // ✅ Se agrega MatSnackBarModule
   ],
   templateUrl: './solicitar-permiso.component.html',
   styleUrls: ['./solicitar-permiso.component.css'],
@@ -34,7 +36,7 @@ export class SolicitarPermisoComponent implements OnInit {
     {
       tipo_permiso: 'Enfermedad',
       descripcion: 'Permiso por enfermedad o incapacidad.',
-      dias: 50, // o un valor por defecto
+      dias: 50,
     },
     {
       tipo_permiso: 'Personal',
@@ -43,55 +45,47 @@ export class SolicitarPermisoComponent implements OnInit {
     },
   ];
   busquedaId: number | null = null;
-  mensajeConfirmacion: string = '';
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private snackBar: MatSnackBar) {}
 
-  ngOnInit(): void {
-    // No necesitas cargar permisos del servicio aquí
+  ngOnInit(): void {}
+
+  mostrarMensaje(mensaje: string) {
+    this.snackBar.open(mensaje, 'Cerrar', {
+      duration: 3000,
+      panelClass: ['snack-bar-center']
+    });
   }
 
   solicitarPermiso(permiso: Permiso) {
     const dialogRef = this.dialog.open(FormPermisosComponent, {
       data: { 
-        tipo_permiso: permiso.tipo_permiso, // ✅ Se pasa correctamente el tipo de permiso
-        fecha_solicitud: new Date().toISOString().slice(0, 10) // Fecha actual
+        tipo_permiso: permiso.tipo_permiso,
+        fecha_solicitud: new Date().toISOString().slice(0, 10)
       },
     });
-  
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        console.log('Formulario cerrado con éxito');
-      } else {
-        console.log('Formulario cerrado sin cambios');
-      }
-    });
   }
-  
 
   solicitarPermisoVacaciones() {
-    const permiso = this.permisos[0]; // Permiso de vacaciones
-    this.solicitarPermiso(permiso);
+    this.solicitarPermiso(this.permisos[0]);
   }
 
   solicitarPermisoEnfermedad() {
-    const permiso = this.permisos[1]; // Permiso de enfermedad
-    this.solicitarPermiso(permiso);
+    this.solicitarPermiso(this.permisos[1]);
   }
 
   solicitarPermisoPersonal() {
-    const permiso = this.permisos[2]; // Permiso personal
-    this.solicitarPermiso(permiso);
+    this.solicitarPermiso(this.permisos[2]);
   }
 
   buscarPersona(): void {
     if (this.busquedaId !== null) {
-      const personaEncontrada = this.permisos.some((permiso) => permiso.id === this.busquedaId);
-      this.mensajeConfirmacion = personaEncontrada
-        ? 'La persona existe en la base de datos.'
-        : 'La persona no existe en la base de datos.';
+      const personaEncontrada = this.permisos.some((permiso) => permiso.dias === this.busquedaId);
+      this.mostrarMensaje(
+        personaEncontrada ? 'La persona existe en la base de datos.' : 'La persona no existe en la base de datos.'
+      );
     } else {
-      this.mensajeConfirmacion = 'Por favor, ingrese un ID válido.';
+      this.mostrarMensaje('Por favor, ingrese un ID válido.');
     }
   }
 }

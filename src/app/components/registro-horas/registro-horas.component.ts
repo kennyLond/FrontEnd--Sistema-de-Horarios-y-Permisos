@@ -13,6 +13,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-registro-horas',
@@ -27,7 +28,8 @@ import { HttpErrorResponse } from '@angular/common/http';
     MatInputModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
+    MatSnackBarModule
   ],
   templateUrl: './registro-horas.component.html',
   styleUrls: ['./registro-horas.component.css']
@@ -39,12 +41,13 @@ export class RegistroHorasComponent implements OnInit {
   loading = false;
 
   private asistenciaService = inject(AsistenciaService);
+  private _snackBar = inject(MatSnackBar);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit(): void {
-    this.cargarAsistencias(); // Cargar asistencias al inicializar el componente
+    this.cargarAsistencias();
   }
 
   ngAfterViewInit() {
@@ -61,7 +64,7 @@ export class RegistroHorasComponent implements OnInit {
       },
       (error) => {
         console.error('Error al cargar asistencias:', error);
-        alert('Ocurrió un error al cargar las asistencias.');
+        this.mostrarMensaje('Ocurrió un error al cargar las asistencias.');
         this.loading = false;
       }
     );
@@ -69,7 +72,7 @@ export class RegistroHorasComponent implements OnInit {
 
   buscarAsistencia(): void {
     if (!this.personaId) {
-      alert('Ingrese un ID válido');
+      this.mostrarMensaje('Ingrese un ID válido');
       return;
     }
 
@@ -79,14 +82,14 @@ export class RegistroHorasComponent implements OnInit {
         if (data) {
           this.dataSource.data = [data];
         } else {
-          alert('No se encontró asistencia.');
+          this.mostrarMensaje('No se encontró asistencia.');
           this.dataSource.data = [];
         }
         this.loading = false;
       },
       (error) => {
         console.error('Error al obtener asistencia:', error);
-        alert('Ocurrió un error al buscar la asistencia.');
+        this.mostrarMensaje('Ocurrió un error al buscar la asistencia.');
         this.dataSource.data = [];
         this.loading = false;
       }
@@ -95,7 +98,7 @@ export class RegistroHorasComponent implements OnInit {
 
   registrarEntrada(): void {
     if (!this.personaId) {
-      alert('Ingrese un ID válido antes de registrar la entrada.');
+      this.mostrarMensaje('Ingrese un ID válido antes de registrar la entrada.');
       return;
     }
 
@@ -109,14 +112,14 @@ export class RegistroHorasComponent implements OnInit {
 
     this.asistenciaService.registrarEntrada(nuevaAsistencia).subscribe(
       () => {
-        alert('Entrada registrada con éxito.');
+        this.mostrarMensaje('Entrada registrada con éxito.');
         this.buscarAsistencia();
       },
       (error) => {
         if (error instanceof HttpErrorResponse && error.status === 409) {
-          alert('El empleado ya ha registrado sus horas.');
+          this.mostrarMensaje('El empleado ya ha registrado sus horas.');
         } else {
-          alert('Error al registrar la entrada.');
+          this.mostrarMensaje('Error al registrar la entrada.');
         }
       }
     );
@@ -124,12 +127,12 @@ export class RegistroHorasComponent implements OnInit {
 
   registrarSalida(): void {
     if (!this.personaId) {
-      alert('Debe buscar primero una asistencia válida.');
+      this.mostrarMensaje('Debe buscar primero una asistencia válida.');
       return;
     }
 
     this.asistenciaService.registrarSalida(this.personaId).subscribe(() => {
-      alert('Salida registrada con éxito.');
+      this.mostrarMensaje('Salida registrada con éxito.');
       this.buscarAsistencia();
     });
   }
@@ -140,7 +143,6 @@ export class RegistroHorasComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  // Función para formatear la hora con AM/PM
   formatTime(dateTimeString: string | null | undefined): string {
     if (!dateTimeString) {
       return '---';
@@ -150,7 +152,16 @@ export class RegistroHorasComponent implements OnInit {
     const minutes = date.getMinutes().toString().padStart(2, '0');
     const ampm = hours >= 12 ? 'PM' : 'AM';
     hours = hours % 12;
-    hours = hours ? hours : 12; // la hora '0' debe ser '12'
+    hours = hours ? hours : 12;
     return `${hours}:${minutes} ${ampm}`;
+  }
+
+  // ✅ Método para mostrar mensajes
+  mostrarMensaje(mensaje: string) {
+    this._snackBar.open(mensaje, 'Cerrar', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
+    });
   }
 }
