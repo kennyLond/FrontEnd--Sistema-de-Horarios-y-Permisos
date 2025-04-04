@@ -1,143 +1,109 @@
-/* Estilos para la barra de herramientas principal */
-mat-toolbar {
-  background: linear-gradient(135deg, #00509e, #008cff);
-  color: white;
-  font-size: 20px;
-  font-weight: 600;
-  position: relative;
-  overflow: hidden;
-  padding: 16px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+/* Contenedor de tarjetas en fila */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px; /* Aumentamos el espacio entre las tarjetas */
+  justify-content: center;
 }
 
-/* Línea animada en la parte inferior de la barra de herramientas */
-mat-toolbar::after {
+/* Estilos para las tarjetas de contenido */
+mat-card {
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  background: #f9f9f9;
+  max-width: 320px;
+  flex: 1 1 300px;
+  text-align: center;
+  margin-top: 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Línea animada en la parte inferior de la tarjeta */
+mat-card::after {
   content: "";
   position: absolute;
   left: 0;
   bottom: 0;
   width: 100%;
   height: 4px;
-  background: linear-gradient(to right, #00509e, #008cff);
+  background: transparent;
   transform: scaleX(0);
   transform-origin: left;
-  animation: lineMove 3s forwards;
+  transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
 }
 
-/* Animación para la línea inferior */
-@keyframes lineMove {
-  from {
-      transform: scaleX(0);
-  }
-  to {
-      transform: scaleX(1);
-  }
+/* Mostrar la línea con el color correspondiente cuando se pasa el cursor sobre la tarjeta */
+mat-card:hover::after {
+  transform: scaleX(1);
 }
 
-/* Estilos para las tarjetas de contenido */
-mat-card {
-  margin: 20px auto;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  background: #f9f9f9;
-  max-width: 1000px;
+/* Colores de la línea según el botón dentro de la tarjeta */
+mat-card:hover button.green {
+  background: #4caf50;
+}
+mat-card:hover::after {
+  background: #4caf50;
 }
 
-/* Contenedor para el formulario de búsqueda y el botón de agregar */
-.form-container {
+mat-card:hover button.orange {
+  background: #ff9800;
+}
+mat-card:hover::after {
+  background: #ff9800;
+}
+
+mat-card:hover button.blue {
+  background: #2196f3;
+}
+mat-card:hover::after {
+  background: #2196f3;
+}
+
+/* Centrar los botones dentro de las tarjetas */
+mat-card-actions {
   display: flex;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 25px;
-}
-
-/* Estilos para los campos de formulario */
-mat-form-field {
-  flex-grow: 1;
-}
-
-mat-form-field .mat-form-field-label {
-  color: #555;
-  font-size: 16px;
-}
-
-mat-form-field .mat-input-element {
-  font-size: 16px;
-  color: #333;
+  justify-content: center;
+  position: relative;
 }
 
 /* Estilos para los botones */
 button[mat-raised-button] {
-  background: #007bff;
-  color: white;
-  padding: 8px 16px; /* Botones más pequeños */
+  padding: 8px 16px;
   border-radius: 6px;
-  font-size: 14px; /* Fuente más pequeña */
-  transition: background 0.3s ease;
-  margin-left: 8px; /* Espacio entre botones */
-}
-
-button[mat-raised-button]:hover {
-  background: #0056b3;
-}
-
-/* Contenedor para la tabla */
-.table-container {
-  overflow-x: auto;
-  padding-bottom: 10px;
-}
-
-/* Estilos para la tabla */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-  border-radius: 8px;
+  font-size: 14px;
+  transition: background 0.3s ease, color 0.3s ease;
+  margin: 8px;
+  position: relative;
   overflow: hidden;
 }
 
-/* Estilos para las celdas de encabezado y datos de la tabla */
-th, td {
-  padding: 15px;
-  text-align: left;
-  border-bottom: 1px solid #eee;
+/* Estilos para los botones individuales */
+button[mat-raised-button].green {
+  background: #4caf50; /* Verde */
+  color: white;
 }
 
-/* Estilos para las celdas de encabezado */
-th {
-  background: #f0f0f0;
-  font-weight: 600;
-  color: #333;
+button[mat-raised-button].orange {
+  background: #ff9800; /* Naranja */
+  color: white;
 }
 
-/* Estilos para las filas al pasar el ratón */
-tr:hover {
-  background: #f5f5f5;
+button[mat-raised-button].blue {
+  background: #2196f3; /* Azul */
+  color: white;
 }
 
-/* Estilos para los botones de editar y eliminar */
-.btnEdit, .btnDelete {
-  cursor: pointer;
-  transition: transform 0.2s;
-  font-size: 20px;
-  margin: 0 5px;
+/* Estilos hover para los botones */
+button[mat-raised-button].green:hover {
+  background: #43a047;
 }
 
-.btnEdit:hover {
-  color: #007acc;
-  transform: scale(1.2);
+button[mat-raised-button].orange:hover {
+  background: #f57c00;
 }
 
-.btnDelete:hover {
-  color: #cc0000;
-  transform: scale(1.2);
-}
-
-/* Estilos para el paginador */
-mat-paginator {
-  margin-top: 20px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+button[mat-raised-button].blue:hover {
+  background: #1976d2;
 }
