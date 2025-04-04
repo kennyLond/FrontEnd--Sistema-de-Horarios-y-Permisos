@@ -1,49 +1,70 @@
+/* Estilos generales del contenedor */
 .container {
     max-width: 600px;
-    margin: auto;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el título */
+h2 {
     text-align: center;
+    color: #333;
+    margin-bottom: 20px;
 }
 
-.search-container {
-    margin-bottom: 15px;
-}
-
-.search-container input {
-    padding: 8px;
-    margin-right: 5px;
-}
-
-.buttons-container {
-    margin-bottom: 15px;
-}
-
-button {
-    padding: 10px 15px;
-    margin: 5px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-table {
+/* Estilos para el campo de entrada */
+.full-width {
     width: 100%;
-    border-collapse: collapse;
+}
+
+mat-form-field {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+mat-form-field .mat-form-field-label {
+    color: #555;
+}
+
+mat-form-field .mat-input-element {
+    color: #333;
+}
+
+/* Estilos para el contenedor de botones */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Espacio entre los botones */
     margin-top: 20px;
 }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
+/* Estilos para los botones */
+button[mat-raised-button] {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
 }
 
-th {
-    background-color: #007bff;
+/* Estilos para el botón "Buscar" */
+button[mat-raised-button][color="primary"] {
+    background-color: #1976d2;
     color: white;
+}
+
+button[mat-raised-button][color="primary"]:hover {
+    background-color: #1565c0;
+}
+
+/* Estilos para los botones "Registrar Entrada" y "Registrar Salida" */
+.green-button {
+    background-color: #4caf50;
+    color: white;
+}
+
+.green-button:hover {
+    background-color: #43a047;
 }

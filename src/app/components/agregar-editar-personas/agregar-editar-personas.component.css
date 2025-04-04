@@ -1,22 +1,96 @@
-mat-form-field{
-    width: 100%;
-} 
-.row{
+/* Estilos para el contenedor principal del formulario */
+.container {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    background: #f8f8f8; /* Fondo gris claro */
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    width: 95%;
+    max-width: 700px;
+    margin: 20px auto; /* Centrar el formulario */
+    height: 100px;
 }
-.column {
-    flex: 50%;
-    margin: 0px 5px;
+
+h2 {
+    color: #333; /* Texto gris oscuro */
+    margin-bottom: 25px;
+    font-size: 24px;
+    font-weight: 600;
 }
-.error{
-    color:red;
-    margin-top: -10px;
-}
-.container{
+
+/* Estilos para las filas de campos */
+.row {
     display: flex;
     justify-content: space-between;
-    margin: 0px;
+    gap: 25px;
+    width: 100%;
+    margin-bottom: 20px;
 }
-.container mat-spinner{
-    margin: 15px 50px;
+
+/* Estilos para las columnas de campos */
+.column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+/* Estilos para los campos de formulario */
+mat-form-field {
+    width: 100%;
+}
+
+mat-form-field .mat-form-field-label {
+    color: #555;
+}
+
+mat-form-field .mat-input-element {
+    color: #333;
+}
+
+/* Espacio mejorado para los campos de entrada */
+mat-form-field:not(:last-child) {
+    margin-bottom: 15px;
+}
+
+/* Estilos para los mensajes de error */
+.error {
+    color: #d32f2f; /* Rojo para errores */
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Estilos para las acciones del diálogo (botones) */
+mat-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 20px;
+}
+
+/* Estilos para los botones */
+button[mat-button] {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-left: 12px;
+    background: #e0e0e0; /* Fondo gris claro para botones */
+    color: #333;
+    font-weight: 500;
+}
+
+button[mat-button]:hover {
+    background: #bdbdbd; /* Gris más oscuro al pasar el ratón */
+}
+
+/* Estilos para el botón "Aceptar" */
+button[mat-button][color="primary"] {
+    background: #1976d2; /* Azul primario */
+    color: white;
+}
+
+button[mat-button][color="primary"]:hover {
+    background: #1565c0;
 }
