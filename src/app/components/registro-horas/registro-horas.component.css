@@ -98,3 +98,53 @@ mat-card {
 mat-card {
     height: 0px;
 }
+
+/* diseño de la tabla*/
+/* Fade-in para contenedores */
+.table-container.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Animación */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Sombra suave y bordes redondeados para la tabla */
+.asistencia-table {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Estilo encabezado */
+.asistencia-table th {
+    background:  #004466 !important;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+/* Estilo celdas */
+.asistencia-table td {
+    font-size: 14px;
+    color: #333;
+}
+
+
+/* Hover row */
+.asistencia-table tr:hover {
+    background-color: #e3f2fd;
+    transition: background-color 0.3s ease-in-out;
+}
+

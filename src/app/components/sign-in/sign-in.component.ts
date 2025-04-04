@@ -8,13 +8,14 @@ import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // Importa FormsModule para [(ngModel)]
 import { SpinnerComponent } from '../../shared/spinner/spinner.component'; // Importa el SpinnerComponent
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.css'],
-  imports: [CommonModule, FormsModule, SpinnerComponent] // Importa las dependencias
+  imports: [CommonModule, FormsModule, SpinnerComponent, RouterLink] // Importa las dependencias
 })
 export class SignInComponent implements OnInit {
   username: string = '';

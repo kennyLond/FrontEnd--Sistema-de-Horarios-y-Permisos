@@ -156,3 +156,62 @@ tr:hover {
         transform: translateY(0);
     }
 }
+
+/*efectos de la tabla */
+.table-container {
+    overflow-x: auto;
+    border-radius: 10px;
+}
+
+/* Tabla con sombra y bordes suaves */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Encabezados */
+.persona-table th {
+    background-color:  #004466;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+/* Celdas */
+td.mat-cell {
+    font-size: 14px;
+    padding: 12px;
+    color: #333;
+}
+
+/* Zebra stripe y hover */
+tr.mat-row:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
+tr.mat-row:hover {
+    background-color: #e3f2fd;
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Animación fade-in */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

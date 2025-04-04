@@ -1,52 +1,52 @@
-
-
-<mat-form-field class="full-width">
-  <mat-label>Ingresa el Código del Empleado</mat-label>
-  <input matInput type="text" [(ngModel)]="personaId">
-</mat-form-field>
-
-  <div class="button-container">
-    <button mat-raised-button color="primary" (click)="buscarAsistencia()">Buscar</button>
-    <button mat-raised-button class="green-button" (click)="registrarEntrada()">Registrar Entrada</button>
-    <button mat-raised-button class="green-button" (click)="registrarSalida()">Registrar Salida</button>
-  </div>
-  
-  <mat-toolbar color="primary">
-    <span>Registro de Asistencia</span>
-</mat-toolbar>
-
-<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
-
-<mat-card class="asistencia-card">
+<div class="table-container fade-in">
     <mat-form-field class="full-width">
-        <mat-label>Búsqueda</mat-label>
-        <input matInput (keyup)="applyFilter($event)" #input autocomplete="off">
+        <mat-label>Ingresa el Código del Empleado</mat-label>
+        <input matInput type="text" [(ngModel)]="personaId">
     </mat-form-field>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z5 asistencia-table" matSort>
-        <ng-container matColumnDef="nombre">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
-            <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
-        </ng-container>
+    <div class="button-container">
+        <button mat-raised-button color="primary" (click)="buscarAsistencia()">Buscar</button>
+        <button mat-raised-button class="green-button" (click)="registrarEntrada()">Registrar Entrada</button>
+        <button mat-raised-button class="green-button" (click)="registrarSalida()">Registrar Salida</button>
+    </div>
 
-        <ng-container matColumnDef="apellido">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Apellido</th>
-            <td mat-cell *matCellDef="let element">{{ element.apellido }}</td>
-        </ng-container>
+    <mat-toolbar color="primary">
+        <span>Registro de Asistencia</span>
+    </mat-toolbar>
 
-        <ng-container matColumnDef="hora_entrada">
-            <th mat-header-cell *matHeaderCellDef>Hora de Entrada</th>
-            <td mat-cell *matCellDef="let element">{{ formatTime(element.hora_entrada) }}</td>
-        </ng-container>
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 
-        <ng-container matColumnDef="hora_salida">
-            <th mat-header-cell *matHeaderCellDef>Hora de Salida</th>
-            <td mat-cell *matCellDef="let element">{{ formatTime(element.hora_salida) }}</td>
-        </ng-container>
+    <mat-card class="asistencia-card">
+        <mat-form-field class="full-width">
+            <mat-label>Búsqueda</mat-label>
+            <input matInput (keyup)="applyFilter($event)" #input autocomplete="off">
+        </mat-form-field>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z5 asistencia-table" matSort>
+            <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+                <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+            </ng-container>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of asistencia"></mat-paginator>
-</mat-card>
+            <ng-container matColumnDef="apellido">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Apellido</th>
+                <td mat-cell *matCellDef="let element">{{ element.apellido }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="hora_entrada">
+                <th mat-header-cell *matHeaderCellDef>Hora de Entrada</th>
+                <td mat-cell *matCellDef="let element">{{ formatTime(element.hora_entrada) }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="hora_salida">
+                <th mat-header-cell *matHeaderCellDef>Hora de Salida</th>
+                <td mat-cell *matCellDef="let element">{{ formatTime(element.hora_salida) }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of asistencia"></mat-paginator>
+    </mat-card>
+</div>
