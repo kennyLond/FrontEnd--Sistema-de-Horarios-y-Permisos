@@ -1,25 +1,30 @@
-<div class="position-sticky pt-3">
+
+    <div class="navbar"><p> Sistema de Gestión</p>
+    <p>Bienvenido a Nuestro Sistema Querido Usuario :) </p>
+    
+    </div>
+
+
+
+
+<div class="sidebar">
     <ul class="nav flex-column">
         <li class="nav-item">
-            <a class="nav-link" routerLink="/list-personas/permisos">
-                Permisos
-            </a>
-            
+            <a class="nav-link" routerLink="/list-personas/permisos">Permisos</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" routerLink="/list-personas">
-                Empleados
-            </a>
+            <a class="nav-link" routerLink="/list-personas">Empleados</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" routerLink="/list-personas/registro-horas">
-                Registro de Horas
-            </a>
+            <a class="nav-link" routerLink="/list-personas/registro-horas">Registro de Horas</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" (click)="logOut()" style="cursor: pointer;">
-                Cerrar Sesión
-            </a>
+            <a class="nav-link logout" (click)="logOut()" style="cursor: pointer;">Cerrar Sesión</a>
         </li>
     </ul>
 </div>
+
+
+
+
+
