@@ -1,26 +1,110 @@
-table{
-width: 100%;
+body {
+    background-color: #d3d3d3;
+}
+
+mat-toolbar {
+    background: linear-gradient(135deg, #004466, #0077b6);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+mat-card {
+    margin-top: 50px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    background: #f7f7f7;
+    position: relative;
+    overflow: hidden;
+}
+
+mat-paginator {
+    position: relative;
+    overflow: hidden;
+}
+
+mat-paginator::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, #004466, #0077b6);
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: lineMove 3s forwards;
+}
+
+@keyframes lineMove {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
+
+.form-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
 }
 
 mat-form-field {
-font-size: 14px;
-width: 100%;
+    flex-grow: 1;
+}
+
+button[mat-raised-button] {
+    background: #004466;
+    color: white;
+    transition: background 0.3s;
+    white-space: nowrap;
+}
+
+button[mat-raised-button]:hover {
+    background: #00334d;
+}
+
+.table-container {
+    overflow-x: auto;
+    padding-bottom: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #00334d;
+    color: white;
+    text-align: left;
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+tr:hover {
+    background: #e0e0e0;
 }
 
 .btnEdit, .btnDelete {
     cursor: pointer;
-
+    transition: transform 0.2s;
 }
 
-.btnEdit {
-    color: black;
-
+.btnEdit:hover {
+    color: #007acc;
+    transform: scale(1.2);
 }
 
-.btnDelete{
-    color: black;
-
-} 
-button{
-    width: 5%;
+.btnDelete:hover {
+    color: #b30000;
+    transform: scale(1.2);
 }
