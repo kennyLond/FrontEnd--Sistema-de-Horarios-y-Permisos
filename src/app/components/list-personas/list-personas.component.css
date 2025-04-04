@@ -7,6 +7,21 @@ mat-toolbar {
     color: white;
     font-size: 18px;
     font-weight: bold;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-container {
+    display: flex;
+    align-items: center; /* Alinea los elementos verticalmente al centro */
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+mat-form-field {
+    flex-grow: 1; /* Permite que el input ocupe el espacio disponible */
 }
 
 mat-card {
@@ -44,17 +59,6 @@ mat-paginator::after {
     to {
         transform: scaleX(1);
     }
-}
-
-.form-container {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 15px;
-}
-
-mat-form-field {
-    flex-grow: 1;
 }
 
 button[mat-raised-button] {

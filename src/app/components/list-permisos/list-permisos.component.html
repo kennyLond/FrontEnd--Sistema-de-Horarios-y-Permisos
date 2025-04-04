@@ -7,7 +7,6 @@
 <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 
 <mat-card>
-    <!-- Campo de búsqueda -->
     <mat-form-field>
         <mat-label>Búsqueda</mat-label>
         <input matInput (keyup)="applyFilter($event)" #input autocomplete="off">
