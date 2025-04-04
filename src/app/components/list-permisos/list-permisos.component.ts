@@ -1,5 +1,5 @@
 import { SolicitarPermisoComponent } from '../../components/solicitar-permiso/solicitar-permiso.component';
-import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -29,10 +29,11 @@ import { Permiso } from '../../interfaces/permiso';
   templateUrl: './list-permisos.component.html',
   styleUrls: ['./list-permisos.component.css']
 })
-export class ListPermisosComponent implements OnInit, AfterViewInit {
+export class ListPermisosComponent implements OnInit, AfterViewInit, OnDestroy {
   displayedColumns: string[] = ['nombre', 'apellido', 'tipo_permiso', 'estado_permiso', 'documento', 'fecha_solicitud'];
   dataSource: MatTableDataSource<Permiso> = new MatTableDataSource<Permiso>();
   loading: boolean = false;
+  private intervaloActualizacion: any;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -45,6 +46,11 @@ export class ListPermisosComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.obtenerPermisos();
+
+    // ACTUALIZACIÓN AUTOMÁTICA CADA 10 SEGUNDOS
+    this.intervaloActualizacion = setInterval(() => {
+      this.obtenerPermisos();
+    }, 10000); // 10000 ms = 10 segundos
   }
 
   ngAfterViewInit(): void {
@@ -52,6 +58,13 @@ export class ListPermisosComponent implements OnInit, AfterViewInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.dataSource.paginator._intl.itemsPerPageLabel = "Ítems por página";
+    }
+  }
+
+  ngOnDestroy(): void {
+    // Detener el intervalo cuando se destruya el componente
+    if (this.intervaloActualizacion) {
+      clearInterval(this.intervaloActualizacion);
     }
   }
 
