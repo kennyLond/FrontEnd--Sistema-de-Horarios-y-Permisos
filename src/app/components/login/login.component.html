@@ -1,35 +1,42 @@
-<div class="wrapper">
-    <div *ngIf="!loading" class="body">
-        <img class="logo" src="../../../assets/img/login-avatar.png" alt="img login">
-        <h3 class="mb-2">¡Hola!</h3>
-        <div class="form-floating mb-3 mt-3">
-            <input 
-                type="text" 
-                [(ngModel)]="username" 
-                autocomplete="false" 
-                class="form-control" 
-                placeholder="Ingrese usuario">
-            <label>Usuario</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input 
-                type="password" 
-                [(ngModel)]="password" 
-                autocomplete="false" 
-                class="form-control" 
-                placeholder="Ingrese password">
-            <label>Contraseña</label>
-        </div>
-        <div class="d-grid gap-2">
-            <button 
-                type="button" 
-                class="btn btn-primary btn-lg" 
-                (click)="login()">Ingresar
-            </button>
-        </div>
-        <p class="mt-3"> ¿Quieres conocer nuestro Sistema? 
-            <a routerLink="/sign-in">Registrarse</a> 
-        </p>
+<div class="login-container">
+    <div class="left-panel">
+        <!-- Aquí puedes agregar un logo o mensaje adicional -->
     </div>
-    <app-spinner *ngIf="loading"></app-spinner>
+    <div class="right-panel">
+        <div class="wrapper">
+            <div *ngIf="!loading" class="body">
+                <img class="logo" src="../../../assets/img/login-avatar.png" alt="img login">
+                <h3 class="mb-2">¡Hola!</h3>
+                <div class="form-floating mb-3 mt-3">
+                    <input 
+                        type="text" 
+                        [(ngModel)]="username" 
+                        autocomplete="false" 
+                        class="form-control" 
+                        placeholder="Ingrese usuario">
+                    <label>Usuario</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input 
+                        type="password" 
+                        [(ngModel)]="password" 
+                        autocomplete="false" 
+                        class="form-control" 
+                        placeholder="Ingrese password">
+                    <label>Contraseña</label>
+                </div>
+                <div class="d-grid gap-2">
+                    <button 
+                        type="button" 
+                        class="btn btn-primary btn-lg" 
+                        (click)="login()">Ingresar
+                    </button>
+                </div>
+                <p class="mt-3"> ¿Quieres conocer nuestro Sistema? 
+                    <a routerLink="/sign-in">Registrarse</a> 
+                </p>
+            </div>
+            <app-spinner *ngIf="loading"></app-spinner>
+        </div>
+    </div>
 </div>

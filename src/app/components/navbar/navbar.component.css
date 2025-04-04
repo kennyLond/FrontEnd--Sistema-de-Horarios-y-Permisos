@@ -1,23 +1,51 @@
-.sidebar {
-    position: fixed; /* Fija el menú a la izquierda */
+.navbar {
+    background: linear-gradient(135deg, #007BFF, #0056b3);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    height: 100vh;
+    position: fixed;
     top: 0;
-    bottom: 0;
     left: 0;
-    z-index: 100; /* Asegura que esté por encima de otros elementos */
-    padding: 48px 0 0; /* Ajusta el relleno superior */
-    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1); /* Agrega una sombra */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-
-.sidebar .nav-link {
-    padding: 10px 16px;
-    font-weight: 500;
-    color: #333;
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    width: 100%;
 }
-
-.sidebar .nav-link.active {
-    color: #007bff; /* Color para el enlace activo */
+.navbar .nav-item {
+    width: 100%;
 }
-
-nav{
-    background-color: #293042;
+.navbar .nav-link {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s, transform 0.2s;
+    border-radius: 5px;
+    text-align: center;
+}
+.navbar .nav-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+.navbar .nav-link:active {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1);
+}
+.logout {
+    margin-top: auto;
+    background: #ff4d4d;
+    color: white;
+    font-weight: bold;
+}
+.logout:hover {
+    background: #cc0000;
 }
