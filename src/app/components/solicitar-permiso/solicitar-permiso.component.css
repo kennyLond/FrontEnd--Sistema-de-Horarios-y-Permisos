@@ -21,14 +21,40 @@ mat-card {
 }
 
 /* Línea animada en la parte inferior de la tarjeta */
-mat-card::after {
+.permiso-card-green::after {
   content: "";
   position: absolute;
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 4px;
-  background: transparent;
+  height: 14px;
+  background: #4caf50; /* Color inicial verde */
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
+}
+
+.permiso-card-orange::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 14px;
+  background: #FFA500; /* Color inicial naranja */
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
+}
+
+.permiso-card-blue::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 14px;
+  background: #2196f3; /* Color inicial azul */
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
@@ -40,24 +66,15 @@ mat-card:hover::after {
 }
 
 /* Colores de la línea según el botón dentro de la tarjeta */
-mat-card:hover button.green {
-  background: #4caf50;
-}
-mat-card:hover::after {
+mat-card.permiso-card-green:hover::after {
   background: #4caf50;
 }
 
-mat-card:hover button.orange {
-  background: #ff9800;
-}
-mat-card:hover::after {
+mat-card.permiso-card-orange:hover::after {
   background: #ff9800;
 }
 
-mat-card:hover button.blue {
-  background: #2196f3;
-}
-mat-card:hover::after {
+mat-card.permiso-card-blue:hover::after {
   background: #2196f3;
 }
 
