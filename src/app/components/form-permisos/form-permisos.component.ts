@@ -3,8 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PermisosService } from '../../services/permisos.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
-
+import { DateAdapter, provideNativeDateAdapter } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -16,14 +15,6 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
-
-interface Permiso {
-  persona_id: number;
-  tipo_permiso: string;
-  estado_permiso: string;
-  documento: string;
-  fecha_solicitud: string;
-}
 
 @Component({
   selector: 'app-form-permisos',
@@ -42,17 +33,16 @@ interface Permiso {
     MatSelectModule,
     MatOptionModule,
   ],
-  providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
-  ],
   templateUrl: './form-permisos.component.html',
-  styleUrls: ['./form-permisos.component.css']
+  styleUrls: ['./form-permisos.component.css'],
+  providers: [provideNativeDateAdapter()]
 })
 export class FormPermisosComponent {
   form: FormGroup;
   loading: boolean = false;
   maxDate: Date;
   operacion: string = 'Solicitar';
+  formEnviado: boolean = false; // ✅ Agregado para controlar los errores
 
   constructor(
     public dialogRef: MatDialogRef<FormPermisosComponent>,
@@ -69,20 +59,30 @@ export class FormPermisosComponent {
       fecha_solicitud: [this.data?.fecha_solicitud || '', Validators.required]
     });
 
-    this.dateAdapter.setLocale('es');
+    dateAdapter.setLocale('es');
   }
 
   cancelar() {
-    this.dialogRef.close();
+    this.formEnviado = false; // ✅ Oculta errores
+    this.form.reset();
+    this.dialogRef.close(false);
   }
 
   addEditPermiso() {
+    this.formEnviado = true; // ✅ Muestra errores al intentar enviar
+
     if (this.form.invalid) {
+      this.form.markAllAsTouched();
       this.mensajeError('Por favor, completa todos los campos correctamente.');
       return;
     }
 
     const id = Number(this.form.value.id);
+    if (!id) {
+      this.mensajeError('El ID es inválido.');
+      return;
+    }
+
     const fechaFormateada = new Date(this.form.value.fecha_solicitud)
       .toISOString().slice(0, 10);
 
@@ -93,15 +93,13 @@ export class FormPermisosComponent {
           return;
         }
 
-        const permiso: Permiso = {
+        const permiso = {
           persona_id: id,
           tipo_permiso: this.data?.tipo_permiso || 'pendiente',
           estado_permiso: 'pendiente',
           documento: 'pendiente',
           fecha_solicitud: fechaFormateada
         };
-
-        console.log('🚀 Datos enviados al backend:', JSON.stringify(permiso, null, 2));
 
         this.loading = true;
         this._permisosService.crearPermiso(permiso).subscribe({
@@ -113,7 +111,7 @@ export class FormPermisosComponent {
           error: (err) => {
             console.error('Error en la petición:', err);
             this.loading = false;
-            this.mensajeError('El usuario ya ha completado los 3 permisos.');
+            this.mensajeError('Error al solicitar el permiso.');
           }
         });
       },

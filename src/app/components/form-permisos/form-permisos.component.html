@@ -3,27 +3,43 @@
 <mat-dialog-content>
   <form [formGroup]="form" (ngSubmit)="addEditPermiso()">
     <div class="form-grid">
+
+      <!-- ID -->
       <mat-form-field appearance="fill">
         <mat-label>ID</mat-label>
         <input matInput formControlName="id" />
+        <mat-error *ngIf="formEnviado && form.get('id')?.hasError('required')">
+          El campo ID es obligatorio.
+        </mat-error>
+        <mat-error *ngIf="formEnviado && form.get('id')?.hasError('pattern')">
+          El ID debe contener solo números.
+        </mat-error>
       </mat-form-field>
 
+      <!-- Tipo de Permiso -->
       <mat-form-field appearance="fill">
         <mat-label>Tipo de Permiso</mat-label>
-        <input matInput formControlName="tipo_permiso" readonly /> <!-- ✅ Solo lectura en lugar de deshabilitado -->
+        <input matInput formControlName="tipo_permiso" readonly />
+        <mat-error *ngIf="formEnviado && form.get('tipo_permiso')?.hasError('required')">
+          El tipo de permiso es obligatorio.
+        </mat-error>
       </mat-form-field>
-      
 
+      <!-- Fecha de Solicitud -->
       <mat-form-field appearance="fill">
         <mat-label>Fecha de Solicitud</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="fecha_solicitud" [max]="maxDate" />
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker touchUi #picker></mat-datepicker>
+        <mat-error *ngIf="formEnviado && form.get('fecha_solicitud')?.hasError('required')">
+          La fecha de solicitud es obligatoria.
+        </mat-error>
       </mat-form-field>
+
     </div>
 
     <mat-dialog-actions align="end">
-      <button mat-button (click)="cancelar()">Cancelar</button>
+      <button mat-button type="button" (click)="cancelar()">Cancelar</button>
       <button mat-raised-button color="primary" type="submit" [disabled]="loading">
         {{ operacion }} Permiso
       </button>
