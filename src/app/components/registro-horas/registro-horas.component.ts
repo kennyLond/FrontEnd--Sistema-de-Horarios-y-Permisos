@@ -113,7 +113,8 @@ export class RegistroHorasComponent implements OnInit {
     this.asistenciaService.registrarEntrada(nuevaAsistencia).subscribe(
       () => {
         this.mostrarMensaje('Entrada registrada con éxito.');
-        this.buscarAsistencia();
+        this.cargarAsistencias(); // ✅ mostrar toda la lista
+        this.personaId = null;     // ✅ limpiar campo ID
       },
       (error) => {
         if (error instanceof HttpErrorResponse && error.status === 409) {
@@ -131,10 +132,16 @@ export class RegistroHorasComponent implements OnInit {
       return;
     }
 
-    this.asistenciaService.registrarSalida(this.personaId).subscribe(() => {
-      this.mostrarMensaje('Salida registrada con éxito.');
-      this.buscarAsistencia();
-    });
+    this.asistenciaService.registrarSalida(this.personaId).subscribe(
+      () => {
+        this.mostrarMensaje('Salida registrada con éxito.');
+        this.cargarAsistencias(); // ✅ mostrar toda la lista
+        this.personaId = null;     // ✅ limpiar campo ID
+      },
+      (error) => {
+        this.mostrarMensaje('Error al registrar la salida.');
+      }
+    );
   }
 
   applyFilter(event: Event): void {
@@ -156,7 +163,6 @@ export class RegistroHorasComponent implements OnInit {
     return `${hours}:${minutes} ${ampm}`;
   }
 
-  // ✅ Método para mostrar mensajes
   mostrarMensaje(mensaje: string) {
     this._snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,

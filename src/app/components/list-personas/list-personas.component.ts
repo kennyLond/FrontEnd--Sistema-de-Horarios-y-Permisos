@@ -14,33 +14,52 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+
 import { Persona } from '../../interfaces/persona';
-import { AgregarEditarPersonasComponent } from '../agregar-editar-personas/agregar-editar-personas.component';
 import { PersonaService } from '../../services/persona.service';
+import { AgregarEditarPersonasComponent } from '../agregar-editar-personas/agregar-editar-personas.component';
 
 @Component({
   selector: 'app-list-personas',
   standalone: true,
-  imports: [
-    CommonModule, MatToolbarModule, MatCardModule, MatTableModule, 
-    MatPaginatorModule, MatSortModule, MatFormFieldModule, MatInputModule, 
-    MatIconModule, MatTooltipModule, MatButtonModule, MatDialogModule, 
-    MatProgressBarModule, MatSnackBarModule
-  ],
   templateUrl: './list-personas.component.html',
-  styleUrls: ['./list-personas.component.css']
+  styleUrls: ['./list-personas.component.css'],
+  imports: [
+    CommonModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatProgressBarModule,
+    MatSnackBarModule
+  ]
 })
 export class ListPersonasComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['nombre', 'apellido', 'correo', 'tipoDocumento', 'documento', 'fechaNacimiento', 'acciones'];
-  dataSource: MatTableDataSource<Persona> = new MatTableDataSource();
+
+  // Columnas a mostrar
+  displayedColumns: string[] = [
+    'nombre', 'apellido', 'correo',
+    'tipoDocumento', 'documento',
+    'fechaNacimiento', 'acciones'
+  ];
+
+  // Fuente de datos de la tabla
+  dataSource = new MatTableDataSource<Persona>();
   loading: boolean = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
-    public dialog: MatDialog, 
-    private personaService: PersonaService, 
+    private dialog: MatDialog,
+    private personaService: PersonaService,
     private snackBar: MatSnackBar
   ) {}
 
@@ -49,31 +68,29 @@ export class ListPersonasComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.paginator && this.sort) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator._intl.itemsPerPageLabel = "Ítems por página";
-    }
+    this.configurarPaginadorYOrdenador();
   }
 
   obtenerPersonas(): void {
     this.loading = true;
+
     this.personaService.getPersonas().subscribe({
       next: (data) => {
-        this.loading = false;
         this.dataSource.data = data;
-        this.asignarPaginadorOrdenador();
+        this.loading = false;
+        this.configurarPaginadorYOrdenador();
       },
       error: () => {
         this.loading = false;
-        this.mostrarMensaje('Error al cargar los datos');
+        this.mostrarMensaje('⚠️ Error al cargar los datos');
       }
     });
   }
 
   applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    this.dataSource.filter = filterValue;
+    const filtro = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.dataSource.filter = filtro;
+
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -86,8 +103,8 @@ export class ListPersonasComponent implements OnInit, AfterViewInit {
       data: { id }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+    dialogRef.afterClosed().subscribe((resultado) => {
+      if (resultado) {
         this.obtenerPersonas();
       }
     });
@@ -95,27 +112,32 @@ export class ListPersonasComponent implements OnInit, AfterViewInit {
 
   deletePersona(id: number): void {
     this.loading = true;
+
     this.personaService.deletePersona(id).subscribe({
       next: () => {
         this.loading = false;
+        this.mostrarMensaje('✅ Persona eliminada con éxito');
         this.obtenerPersonas();
-        this.mostrarMensaje('La persona fue eliminada con éxito');
       },
       error: () => {
         this.loading = false;
-        this.mostrarMensaje('Error al eliminar la persona');
+        this.mostrarMensaje('❌ Error al eliminar la persona');
       }
     });
   }
 
   private mostrarMensaje(mensaje: string): void {
-    this.snackBar.open(mensaje, '', { duration: 2000 });
+    this.snackBar.open(mensaje, '', {
+      duration: 2500,
+      panelClass: ['snackbar-style']
+    });
   }
 
-  private asignarPaginadorOrdenador(): void {
+  private configurarPaginadorYOrdenador(): void {
     if (this.paginator && this.sort) {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.dataSource.paginator._intl.itemsPerPageLabel = "Ítems por página";
     }
   }
 }
