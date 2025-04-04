@@ -15,7 +15,11 @@ mat-toolbar {
     margin-top: 100px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+}
+
+span{
+    margin-top: 15px;
 }
 
 /* Estilos de las tarjetas en modo responsive */

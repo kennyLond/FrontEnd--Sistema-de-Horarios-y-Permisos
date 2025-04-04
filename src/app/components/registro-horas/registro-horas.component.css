@@ -10,6 +10,7 @@ mat-toolbar {
     font-size: 18px;
     font-weight: bold;
     margin-top: 100px;
+    margin-bottom: -100px;
 }
 
 /* Estilos para el título */
@@ -92,4 +93,8 @@ mat-card {
 
 .asistencia-table th {
     background-color: #f2f2f2; /* Un fondo gris claro para los encabezados */
+}
+
+mat-card {
+    height: 0px;
 }
