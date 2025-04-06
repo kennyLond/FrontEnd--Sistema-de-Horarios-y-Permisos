@@ -38,8 +38,13 @@
           </ng-container>
   
           <ng-container matColumnDef="documento">
-            <th mat-header-cell *matHeaderCellDef>Documento</th>
+            <th mat-header-cell *matHeaderCellDef>PDF</th>
             <td mat-cell *matCellDef="let element">{{ element.documento }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="dias">
+            <th mat-header-cell *matHeaderCellDef>Días De permiso</th>
+            <td mat-cell *matCellDef="let element">{{ element.dias }}</td>
           </ng-container>
   
           <ng-container matColumnDef="fecha_solicitud">

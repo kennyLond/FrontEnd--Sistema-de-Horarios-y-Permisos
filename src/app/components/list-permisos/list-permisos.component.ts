@@ -30,7 +30,7 @@ import { Permiso } from '../../interfaces/permiso';
   styleUrls: ['./list-permisos.component.css']
 })
 export class ListPermisosComponent implements OnInit, AfterViewInit, OnDestroy {
-  displayedColumns: string[] = ['nombre', 'apellido', 'tipo_permiso', 'estado_permiso', 'documento', 'fecha_solicitud'];
+  displayedColumns: string[] = ['nombre', 'apellido', 'tipo_permiso', 'estado_permiso', 'documento', 'fecha_solicitud', 'dias'];
   dataSource: MatTableDataSource<Permiso> = new MatTableDataSource<Permiso>();
   loading: boolean = false;
   private intervaloActualizacion: any;
