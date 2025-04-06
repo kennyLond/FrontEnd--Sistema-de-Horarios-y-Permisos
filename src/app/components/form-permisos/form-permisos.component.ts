@@ -42,7 +42,8 @@ export class FormPermisosComponent {
   loading: boolean = false;
   maxDate: Date;
   operacion: string = 'Solicitar';
-  formEnviado: boolean = false; // ✅ Agregado para controlar los errores
+  formEnviado: boolean = false;
+  archivoPDF: File | null = null;
 
   constructor(
     public dialogRef: MatDialogRef<FormPermisosComponent>,
@@ -56,35 +57,47 @@ export class FormPermisosComponent {
     this.form = this.fb.group({
       id: [null, [Validators.required, Validators.pattern('^[0-9]+$')]],
       tipo_permiso: [this.data?.tipo_permiso || '', Validators.required],
-      fecha_solicitud: [this.data?.fecha_solicitud || '', Validators.required]
+      fecha_solicitud: [this.data?.fecha_solicitud || '', Validators.required],
+      dias: [this.data?.dias || null, [Validators.required, Validators.min(1)]],
+      documento: [null, Validators.required]
     });
 
     dateAdapter.setLocale('es');
   }
 
   cancelar() {
-    this.formEnviado = false; // ✅ Oculta errores
+    this.formEnviado = false;
     this.form.reset();
+    this.archivoPDF = null;
     this.dialogRef.close(false);
   }
 
-  addEditPermiso() {
-    this.formEnviado = true; // ✅ Muestra errores al intentar enviar
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
 
-    if (this.form.invalid) {
+    if (file && file.type === 'application/pdf') {
+      this.archivoPDF = file;
+      this.form.patchValue({ documento: file });
+      this.form.get('documento')?.setErrors(null);
+    } else {
+      this.archivoPDF = null;
+      this.form.patchValue({ documento: null });
+      this.form.get('documento')?.setErrors({ invalidType: true });
+      this.mensajeError('Solo se permite subir archivos PDF.');
+    }
+  }
+
+  addEditPermiso() {
+    this.formEnviado = true;
+
+    if (this.form.invalid || !this.archivoPDF) {
       this.form.markAllAsTouched();
-      this.mensajeError('Por favor, completa todos los campos correctamente.');
+      this.mensajeError('Por favor, completa todos los campos correctamente y selecciona un archivo PDF.');
       return;
     }
 
     const id = Number(this.form.value.id);
-    if (!id) {
-      this.mensajeError('El ID es inválido.');
-      return;
-    }
-
-    const fechaFormateada = new Date(this.form.value.fecha_solicitud)
-      .toISOString().slice(0, 10);
+    const fechaFormateada = new Date(this.form.value.fecha_solicitud).toISOString().slice(0, 10);
 
     this._permisosService.verificarPersona(id).subscribe({
       next: (existe: boolean) => {
@@ -93,30 +106,33 @@ export class FormPermisosComponent {
           return;
         }
 
-        const permiso = {
-          persona_id: id,
-          tipo_permiso: this.data?.tipo_permiso || 'pendiente',
-          estado_permiso: 'pendiente',
-          documento: 'pendiente',
-          fecha_solicitud: fechaFormateada
-        };
+        const formData = new FormData();
+        formData.append('persona_id', id.toString());
+        formData.append('tipo_permiso', this.form.value.tipo_permiso);
+        formData.append('estado_permiso', 'pendiente');
+        formData.append('fecha_solicitud', fechaFormateada);
+        formData.append('dias', this.form.value.dias.toString());
+        formData.append('documento', this.archivoPDF as File);
 
         this.loading = true;
-        this._permisosService.crearPermiso(permiso).subscribe({
+
+        this._permisosService.crearPermiso(formData).subscribe({
           next: () => {
             this.mensajeExito('Permiso solicitado correctamente.');
             this.loading = false;
             this.dialogRef.close(true);
+            this.form.reset();
+            this.archivoPDF = null;
           },
           error: (err) => {
             console.error('Error en la petición:', err);
             this.loading = false;
-            this.mensajeError('Error al solicitar el permiso.');
+            this.mensajeError('Error al solicitar el permiso: ' + err.message);
           }
         });
       },
-      error: () => {
-        this.mensajeError('Error al verificar la persona.');
+      error: (err) => {
+        this.mensajeError('Error al verificar la persona: ' + err.message);
       }
     });
   }

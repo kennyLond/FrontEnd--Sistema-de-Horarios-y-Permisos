@@ -7,7 +7,7 @@
       <!-- ID -->
       <mat-form-field appearance="fill">
         <mat-label>ID</mat-label>
-        <input matInput formControlName="id" />
+        <input matInput formControlName="id" type="text" autocomplete="off" />
         <mat-error *ngIf="formEnviado && form.get('id')?.hasError('required')">
           El campo ID es obligatorio.
         </mat-error>
@@ -28,13 +28,51 @@
       <!-- Fecha de Solicitud -->
       <mat-form-field appearance="fill">
         <mat-label>Fecha de Solicitud</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="fecha_solicitud" [max]="maxDate" />
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="fecha_solicitud"
+          [max]="maxDate"
+          autocomplete="off"
+        />
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker touchUi #picker></mat-datepicker>
         <mat-error *ngIf="formEnviado && form.get('fecha_solicitud')?.hasError('required')">
           La fecha de solicitud es obligatoria.
         </mat-error>
       </mat-form-field>
+
+      <!-- Días de Permiso -->
+      <mat-form-field appearance="fill">
+        <mat-label>Días de Permiso</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="dias"
+          min="1"
+          placeholder="Ej. 2"
+        />
+        <mat-error *ngIf="formEnviado && form.get('dias')?.hasError('required')">
+          El campo días es obligatorio.
+        </mat-error>
+        <mat-error *ngIf="formEnviado && form.get('dias')?.hasError('min')">
+          Debe ser al menos 1 día.
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Campo para subir archivo PDF -->
+      <div class="file-upload">
+        <label for="documento">Documento (PDF)</label>
+        <input
+          id="documento"
+          type="file"
+          accept="application/pdf"
+          (change)="onFileSelected($event)"
+        />
+        <mat-error *ngIf="formEnviado && !archivoPDF">
+          El archivo PDF es obligatorio.
+        </mat-error>
+      </div>
 
     </div>
 
