@@ -41,6 +41,17 @@ export class PermisosService {
     );
   }
 
+  // ✅ Nuevo método: Actualizar estado del permiso
+  actualizarEstadoPermiso(id: number, estado: string): Observable<any> {
+    if (!id || !estado) {
+      return throwError(() => new Error('ID o estado inválido.'));
+    }
+
+    return this.http.put(`${this.apiUrl}/${id}/estado`, { estado }).pipe(
+      catchError(error => this.handleError(error))
+    );
+  }
+
   // Manejo de errores
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'Algo salió mal; por favor intente nuevamente más tarde.';

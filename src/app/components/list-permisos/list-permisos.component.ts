@@ -1,4 +1,3 @@
-import { SolicitarPermisoComponent } from '../../components/solicitar-permiso/solicitar-permiso.component';
 import { Component, ViewChild, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -14,23 +13,45 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+
 import { PermisosService } from '../../services/permisos.service';
 import { Permiso } from '../../interfaces/permiso';
+import { SolicitarPermisoComponent } from '../../components/solicitar-permiso/solicitar-permiso.component';
 
 @Component({
   selector: 'app-list-permisos',
   standalone: true,
   imports: [
-    CommonModule, MatToolbarModule, MatCardModule, MatTableModule,
-    MatPaginatorModule, MatSortModule, MatFormFieldModule, MatInputModule,
-    MatIconModule, MatTooltipModule, MatButtonModule, MatDialogModule,
-    MatProgressBarModule, MatSnackBarModule, SolicitarPermisoComponent
+    CommonModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatProgressBarModule,
+    MatSnackBarModule,
+    SolicitarPermisoComponent,
   ],
   templateUrl: './list-permisos.component.html',
   styleUrls: ['./list-permisos.component.css']
 })
 export class ListPermisosComponent implements OnInit, AfterViewInit, OnDestroy {
-  displayedColumns: string[] = ['nombre', 'apellido', 'tipo_permiso', 'estado_permiso', 'documento', 'fecha_solicitud', 'dias'];
+  displayedColumns: string[] = [
+    'nombre',
+    'apellido',
+    'tipo_permiso',
+    'estado_permiso',
+    'documento',
+    'fecha_solicitud',
+    'dias',
+    'acciones' // Asegúrate de tener esta columna en el HTML
+  ];
   dataSource: MatTableDataSource<Permiso> = new MatTableDataSource<Permiso>();
   loading: boolean = false;
   private intervaloActualizacion: any;
@@ -42,27 +63,24 @@ export class ListPermisosComponent implements OnInit, AfterViewInit, OnDestroy {
     public dialog: MatDialog,
     private permisoService: PermisosService,
     private snackBar: MatSnackBar
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.obtenerPermisos();
-
-    // ACTUALIZACIÓN AUTOMÁTICA CADA 10 SEGUNDOS
     this.intervaloActualizacion = setInterval(() => {
       this.obtenerPermisos();
-    }, 10000); // 10000 ms = 10 segundos
+    }, 10000); // Actualiza cada 10 segundos
   }
 
   ngAfterViewInit(): void {
     if (this.paginator && this.sort) {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.dataSource.paginator._intl.itemsPerPageLabel = "Ítems por página";
+      this.dataSource.paginator._intl.itemsPerPageLabel = 'Ítems por página';
     }
   }
 
   ngOnDestroy(): void {
-    // Detener el intervalo cuando se destruya el componente
     if (this.intervaloActualizacion) {
       clearInterval(this.intervaloActualizacion);
     }
@@ -96,14 +114,38 @@ export class ListPermisosComponent implements OnInit, AfterViewInit, OnDestroy {
       disableClose: true,
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.obtenerPermisos(); // Actualiza la tabla después de cerrar el diálogo
+        this.obtenerPermisos(); // Actualiza la tabla si se registró un nuevo permiso
       }
     });
   }
 
   private mostrarMensaje(mensaje: string): void {
     this.snackBar.open(mensaje, '', { duration: 2000 });
+  }
+
+  // ✅ MÉTODO PARA DESCARGAR DOCUMENTO PDF
+  descargarArchivo(nombreArchivo: string) {
+    const url = `http://localhost:3000/api/permisos/descargar/${nombreArchivo}`;
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = nombreArchivo;
+    link.target = '_blank'; // evita redireccionar la pestaña actual
+    link.click();
+  }
+  
+
+  // ✅ MÉTODO PARA CAMBIAR ESTADO DE PERMISO
+  cambiarEstado(id: number, nuevoEstado: string): void {
+    this.permisoService.actualizarEstadoPermiso(id, nuevoEstado).subscribe({
+      next: () => {
+        this.mostrarMensaje(`Permiso ${nuevoEstado}`);
+        this.obtenerPermisos(); // Refresca la tabla
+      },
+      error: () => {
+        this.mostrarMensaje('Error al cambiar el estado del permiso');
+      }
+    });
   }
 }

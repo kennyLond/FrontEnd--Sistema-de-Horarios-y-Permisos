@@ -6,6 +6,6 @@ export interface Permiso {
     estado_permiso?: string;
     documento?: File | null;
     fecha_solicitud?: string;
-    descripcion?: string; // Agregada la propiedad descripcion
-    dias?: number; // Agregada la propiedad dias
+    descripcion?: string; 
+    dias?: number; 
   }

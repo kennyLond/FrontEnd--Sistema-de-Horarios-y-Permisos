@@ -6,13 +6,13 @@
 
       <!-- ID -->
       <mat-form-field appearance="fill">
-        <mat-label>ID</mat-label>
+        <mat-label>Código de Empleado</mat-label>
         <input matInput formControlName="id" type="text" autocomplete="off" />
         <mat-error *ngIf="formEnviado && form.get('id')?.hasError('required')">
-          El campo ID es obligatorio.
+          El campo Código es obligatorio.
         </mat-error>
         <mat-error *ngIf="formEnviado && form.get('id')?.hasError('pattern')">
-          El ID debe contener solo números.
+          El Códigodebe contener solo números.
         </mat-error>
       </mat-form-field>
 
@@ -47,18 +47,18 @@
         <mat-label>Días de Permiso</mat-label>
         <input
           matInput
-          type="number"
           formControlName="dias"
-          min="1"
-          placeholder="Ej. 2"
+          type="text"
+          autocomplete="off"
         />
         <mat-error *ngIf="formEnviado && form.get('dias')?.hasError('required')">
-          El campo días es obligatorio.
+          El campo Días es obligatorio.
         </mat-error>
-        <mat-error *ngIf="formEnviado && form.get('dias')?.hasError('min')">
-          Debe ser al menos 1 día.
+        <mat-error *ngIf="formEnviado && form.get('dias')?.hasError('pattern')">
+          Los días deben contener solo números positivos.
         </mat-error>
       </mat-form-field>
+      
 
       <!-- Campo para subir archivo PDF -->
       <div class="file-upload">
