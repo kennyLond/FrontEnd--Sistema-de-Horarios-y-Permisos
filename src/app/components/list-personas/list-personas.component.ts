@@ -46,7 +46,7 @@ export class ListPersonasComponent implements OnInit, AfterViewInit {
   // Columnas a mostrar
   displayedColumns: string[] = [
     'nombre', 'apellido', 'correo',
-    'tipoDocumento', 'documento',
+    'tipoDocumento', 'num_documento',
     'fechaNacimiento', 'acciones'
   ];
 

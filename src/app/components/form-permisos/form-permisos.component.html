@@ -55,7 +55,7 @@
           El campo Días es obligatorio.
         </mat-error>
         <mat-error *ngIf="formEnviado && form.get('dias')?.hasError('pattern')">
-          Los días deben contener solo números positivos.
+          Los días deben contener solo números.
         </mat-error>
       </mat-form-field>
       

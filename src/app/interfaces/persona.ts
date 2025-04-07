@@ -4,7 +4,7 @@ export interface Persona {
     apellido: string;
     correo: string;
     tipoDocumento:string;
-    documento:number;
+    num_documento:number;
     fechaNacimiento: Date;
 
 }
