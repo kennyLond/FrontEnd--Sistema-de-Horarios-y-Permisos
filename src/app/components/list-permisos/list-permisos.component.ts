@@ -50,7 +50,7 @@ export class ListPermisosComponent implements OnInit, AfterViewInit, OnDestroy {
     'documento',
     'fecha_solicitud',
     'dias',
-    'acciones' // Asegúrate de tener esta columna en el HTML
+    'acciones'
   ];
   dataSource: MatTableDataSource<Permiso> = new MatTableDataSource<Permiso>();
   loading: boolean = false;
@@ -63,13 +63,13 @@ export class ListPermisosComponent implements OnInit, AfterViewInit, OnDestroy {
     public dialog: MatDialog,
     private permisoService: PermisosService,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.obtenerPermisos();
     this.intervaloActualizacion = setInterval(() => {
       this.obtenerPermisos();
-    }, 10000); // Actualiza cada 10 segundos
+    }, 10000);
   }
 
   ngAfterViewInit(): void {
@@ -116,7 +116,7 @@ export class ListPermisosComponent implements OnInit, AfterViewInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.obtenerPermisos(); // Actualiza la tabla si se registró un nuevo permiso
+        this.obtenerPermisos();
       }
     });
   }
@@ -125,20 +125,19 @@ export class ListPermisosComponent implements OnInit, AfterViewInit, OnDestroy {
     this.snackBar.open(mensaje, '', { duration: 2000 });
   }
 
-  // ✅ MÉTODO PARA DESCARGAR DOCUMENTO PDF
   descargarArchivo(nombreArchivo: string) {
     const url = `http://localhost:3000/api/permisos/descargar/${nombreArchivo}`;
     const link = document.createElement('a');
     link.href = url;
     link.download = nombreArchivo;
-    link.target = '_blank'; // evita redireccionar la pestaña actual
+    link.target = '_blank';
     link.click();
   }
-  
 
-  // ✅ MÉTODO PARA CAMBIAR ESTADO DE PERMISO
+
   cambiarEstado(id: number, nuevoEstado: string): void {
-    this.permisoService.actualizarEstadoPermiso(id, nuevoEstado).subscribe({
+    const estadoEnMayusculas = nuevoEstado.toUpperCase(); // Convierte a mayúsculas
+    this.permisoService.actualizarEstadoPermiso(id, estadoEnMayusculas).subscribe({
       next: () => {
         this.mostrarMensaje(`Permiso ${nuevoEstado}`);
         this.obtenerPermisos(); // Refresca la tabla
@@ -148,4 +147,5 @@ export class ListPermisosComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
   }
+  
 }

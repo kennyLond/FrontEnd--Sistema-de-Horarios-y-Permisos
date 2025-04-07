@@ -63,7 +63,7 @@
         <!-- Nueva columna de acciones -->
         <ng-container matColumnDef="acciones">
           <th mat-header-cell *matHeaderCellDef> Acciones </th>
-          <td mat-cell *matCellDef="let element">
+          <td mat-cell *matCellDef="let element">           <!--
             <span
               [ngClass]="{
                 'text-success': element.estado_permiso === 'aceptado',
@@ -73,13 +73,13 @@
             >
               {{ element.estado_permiso || 'Pendiente' }}
             </span>
-
+            -->
             <button
               mat-icon-button
               color="primary"
-              (click)="cambiarEstado(element.id, 'aceptado')"
-              [disabled]="element.estado_permiso === 'aceptado'"
-              matTooltip="Aceptar"
+              (click)="cambiarEstado(element.id, 'APROBADO')"
+              [disabled]="element.estado_permiso === 'APROBADO'"
+              matTooltip="Aprobar permiso"
             >
               <mat-icon>check</mat-icon>
             </button>
@@ -87,9 +87,9 @@
             <button
               mat-icon-button
               color="warn"
-              (click)="cambiarEstado(element.id, 'denegado')"
-              [disabled]="element.estado_permiso === 'denegado'"
-              matTooltip="Denegar"
+              (click)="cambiarEstado(element.id, 'DENEGADO')"
+              [disabled]="element.estado_permiso === 'DENEGADO'"
+              matTooltip="Denegar permiso"
             >
               <mat-icon>close</mat-icon>
             </button>
