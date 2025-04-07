@@ -52,6 +52,17 @@ export class PermisosService {
     );
   }
 
+// ✅ Descargar documento PDF
+descargarArchivo(nombreArchivo: string): Observable<Blob> {
+  const url = `${this.apiUrl}/descargar/${nombreArchivo}`;
+  return this.http.get(url, { responseType: 'blob' }).pipe(
+    catchError(error => this.handleError(error))
+  );
+}
+
+
+
+
   // Manejo de errores
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'Algo salió mal; por favor intente nuevamente más tarde.';
