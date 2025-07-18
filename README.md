@@ -94,6 +94,28 @@ zone.js
 
 tslib
 
+## EVIDENCIA (Imagenes)
+###  Evidencia 1 – Vista Inicio de Sesión
+![Evidencia 1](https://drive.google.com/file/d/19tjMDtWuRNkPBfO-ru-b9e_UI1jpmMZb/view?usp=sharing)
+
+###  Evidencia 2 – Vista Registrar Usuario
+![Evidencia 2](https://drive.google.com/file/d/10l8U5m_hyUPVIj8lSCQrUg4xiLglSJ7F/view?usp=sharing)
+
+###  Evidencia 3 – Confirmación de Usuario creado
+![Evidencia 3](https://drive.google.com/file/d/10l8U5m_hyUPVIj8lSCQrUg4xiLglSJ7F/view?usp=sharing)
+
+###  Evidencia 4 – Edición de libro (Editar Orgullo y Odio por Orgullo y prejuicio )
+![Evidencia 4](https://drive.google.com/uc?id=1NGt2ZxH5pM0tD3up8gZ_g-aFg85EFI5k)
+
+###  Evidencia 5 – Calendario de publicación
+![Evidencia 5](https://drive.google.com/uc?id=1NKUKMotr_QAqRLnACMd1mgRplZ33dGCz)
+
+### Evidencia 6 – Confirmación de eliminación
+![Evidencia 6](https://drive.google.com/uc?id=10-nSJ4b9IY3ijJGvFcCVebgVp4_z2UJX)
+
+### Evidencia 7 – Registro de nuevo libro
+![Evidencia 7a](https://drive.google.com/uc?id=1tnu5zR7rZDJiVOpgPLJnVqLQkIB7cB91)
+![Evidencia 7b](https://drive.google.com/uc?id=19E4EaZZiY_gzD7GOpGqyxfzfoGJkXgw8)
 
 ## Tecnologías Utilizadas
 
