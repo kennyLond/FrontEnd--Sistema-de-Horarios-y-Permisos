@@ -70,16 +70,6 @@ typescript
 
 jasmine-core
 
-karma
-
-karma-chrome-launcher
-
-karma-coverage
-
-karma-jasmine
-
-karma-jasmine-html-reporter
-
 ### DEPENDENCIAS DE PRODUCCIÓN 
 @angular/animations
 
@@ -105,4 +95,23 @@ zone.js
 
 tslib
 
+##  Estructura del Proyecto
+El proyecto está organizado por funcionalidades, permitiendo una mejor escalabilidad y mantenimiento del código.
+
+##  Metodología de Desarrollo
+La organización del proyecto se basa en los siguientes principios:
+
+Separación de funcionalidades: cada módulo/componentes relacionados con una función específica están agrupados.
+
+Responsabilidad única: cada carpeta maneja una sola responsabilidad (vistas, servicios, interfaces, utilidades, etc.).
+
+Reutilización: componentes reutilizables están centralizados en shared/.
+
+Esto facilita:
+
+Escalabilidad del proyecto
+
+Mantenimiento del código
+
+Lectura clara para otros desarrolladores
 
