@@ -3,7 +3,7 @@ Kenny Orlando Londoño Torrado – Desarrollador Frontend Jr.
 ([@kennyLond])
 (https://github.com/kennyLond/FrontEnd--Sistema-de-Horarios-y-Permisos))
 
-# Sistema de Horarios y Permisos
+# Sistema de Horarios y Permisos TEMPO
 Aplicación web desarrollada con Angular y TypeScript para la gestión de personas, permisos y registros de horas. Permite visualizar, crear, editar y eliminar registros a través de una API REST personalizada y una interfaz intuitiva.
 
 Este proyecto fue realizado como parte del requisito final para culminar mi etapa productiva en el SENA como Desarrollador Frontend Angular Jr.
@@ -40,3 +40,69 @@ MySQL 8.x
 Navegador web moderno (Chrome, Firefox, Edge, etc.)
 
 Angular CLI instalado globalmente (opcional, pero recomendado)
+
+## Comandos de uso
+
+### Clonar el repositorio
+
+git clone https://github.com/kennyLond/FrontEnd--Sistema-de-Horarios-y-Permisos
+cd FrontEnd--Sistema-de-Horarios-y-Permisos
+
+## INSTALAR DEPENDENCIAS FRONTEND
+npm install
+
+## LEVANTAR PROYECTO EN MODO DESARROLLO
+npm start
+
+## DEPENDENCIAS DEL PROYECTO
+
+
+### DEPENDENCIAS DE DESARROLLO
+@angular-devkit/build-angular
+
+@angular/cli
+
+@angular/compiler-cli
+
+typescript
+
+@types/jasmine
+
+jasmine-core
+
+karma
+
+karma-chrome-launcher
+
+karma-coverage
+
+karma-jasmine
+
+karma-jasmine-html-reporter
+
+### DEPENDENCIAS DE PRODUCCIÓN 
+@angular/animations
+
+@angular/cdk
+
+@angular/common
+
+@angular/core
+
+@angular/forms
+
+@angular/router
+
+@angular/material
+
+bootstrap
+
+ngx-toastr
+
+rxjs
+
+zone.js
+
+tslib
+
+
