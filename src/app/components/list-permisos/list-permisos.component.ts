@@ -54,6 +54,10 @@ export class ListPermisosComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
   dataSource: MatTableDataSource<Permiso> = new MatTableDataSource<Permiso>();
   loading: boolean = false;
+<<<<<<< HEAD
+=======
+
+>>>>>>> d2fa9c1 (Initial commit)
   private intervaloActualizacion: any;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
