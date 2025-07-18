@@ -30,7 +30,7 @@ Autenticación de usuario (login y registro)
 
 Interfaz responsiva e intuitiva adaptable a diferentes dispositivos
 
-# REQUISITOS DEL SISTEMA
+## REQUISITOS DEL SISTEMA
 Node.js ≥ 18
 
 NPM ≥ 9
@@ -41,21 +41,20 @@ Navegador web moderno (Chrome, Firefox, Edge, etc.)
 
 Angular CLI instalado globalmente (opcional, pero recomendado)
 
-# Comandos de uso
+## Comandos de uso
 
-## Clonar el repositorio
+### Clonar el repositorio
 
 git clone https://github.com/kennyLond/FrontEnd--Sistema-de-Horarios-y-Permisos
 cd FrontEnd--Sistema-de-Horarios-y-Permisos
 
-# INSTALAR DEPENDENCIAS FRONTEND
+## INSTALAR DEPENDENCIAS FRONTEND
 npm install
 
 ## LEVANTAR PROYECTO EN MODO DESARROLLO
 npm start
 
 # DEPENDENCIAS DEL PROYECTO
-
 
 ## DEPENDENCIAS DE DESARROLLO
 @angular-devkit/build-angular
@@ -70,7 +69,7 @@ typescript
 
 jasmine-core
 
-### DEPENDENCIAS DE PRODUCCIÓN 
+## DEPENDENCIAS DE PRODUCCIÓN 
 @angular/animations
 
 @angular/cdk
@@ -95,10 +94,10 @@ zone.js
 
 tslib
 
-#  Estructura del Proyecto
+##  Estructura del Proyecto
 El proyecto está organizado por funcionalidades, permitiendo una mejor escalabilidad y mantenimiento del código.
 
-#  Metodología de Desarrollo
+##  Metodología de Desarrollo
 La organización del proyecto se basa en los siguientes principios:
 
 Separación de funcionalidades: cada módulo/componentes relacionados con una función específica están agrupados.
