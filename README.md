@@ -1,5 +1,5 @@
 ## AUTOR
-Kenny Orlando Londoño Torrado – Desarrolladora Frontend Jr. 
+Kenny Orlando Londoño Torrado – Desarrollador Frontend Jr. 
 ([@kennyLond])
 (https://github.com/kennyLond/FrontEnd--Sistema-de-Horarios-y-Permisos))
 
