@@ -94,6 +94,28 @@ zone.js
 
 tslib
 
+
+## Tecnologías Utilizadas
+
+Este proyecto fue desarrollado utilizando el siguiente stack de tecnologías:
+
+### Framework y Lenguaje
+- **Angular 19** – Framework para el desarrollo de aplicaciones web SPA.
+- **TypeScript** – Superset de JavaScript con tipado estático.
+
+### UI y Estilos
+- **Angular Material** – Componentes UI basados en Material Design.
+- **Bootstrap 5** – Framework CSS para diseño responsive.
+
+### Notificaciones
+- **Ngx-Toastr** – Para mostrar mensajes emergentes (toasts) al usuario.
+
+### Programación Reactiva
+- **RxJS** – Biblioteca para trabajar con programación reactiva y observables.
+
+### Herramientas de Desarrollo
+- **Angular CLI** – Interfaz de línea de comandos para generación y gestión del proyecto.
+
 ##  Estructura del Proyecto
 El proyecto está organizado por funcionalidades, permitiendo una mejor escalabilidad y mantenimiento del código.
 
