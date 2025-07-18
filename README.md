@@ -8,10 +8,10 @@ Aplicación web desarrollada con Angular y TypeScript para la gestión de person
 
 Este proyecto fue realizado como parte del requisito final para culminar mi etapa productiva en el SENA como Desarrollador Frontend Angular Jr.
 
-#OBJETIVO
+# OBJETIVO
 Desarrollar una aplicación de Página Única (SPA) que permita realizar operaciones CRUD sobre personas, permisos y registros de asistencia, aplicando buenas prácticas de desarrollo frontend con Angular, uso de TypeScript, componentes reutilizables, validaciones reactivas y consumo de una API propia.
 
-#Funcionalidades principales
+# FUNCIONALIDADES PRINCIPALES
 Listado de personas con opción de búsqueda, edición y eliminación
 
 Registro y gestión de permisos
@@ -30,7 +30,7 @@ Autenticación de usuario (login y registro)
 
 Interfaz responsiva e intuitiva adaptable a diferentes dispositivos
 
-#REQUISITOS DEL SISTEMA
+# REQUISITOS DEL SISTEMA
 Node.js ≥ 18
 
 NPM ≥ 9
