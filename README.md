@@ -147,6 +147,7 @@ Este proyecto fue desarrollado utilizando el siguiente stack de tecnologías:
 ### UI y Estilos
 - **Angular Material** – Componentes UI basados en Material Design.
 - **Bootstrap 5** – Framework CSS para diseño responsive.
+- **CSS personalizado** – Para adaptar y personalizar la interfaz según las necesidades del proyecto.
 
 ### Notificaciones
 - **Ngx-Toastr** – Para mostrar mensajes emergentes (toasts) al usuario.
