@@ -1,16 +1,15 @@
-<<<<<<< HEAD
 ## AUTOR
 Kenny Orlando Londoño Torrado – Desarrollador Frontend Jr. 
 ([@kennyLond])
 (https://github.com/kennyLond/FrontEnd--Sistema-de-Horarios-y-Permisos))
 
 # Sistema de Horarios y Permisos TEMPO
-Aplicación web desarrollada con Angular y TypeScript para la gestión de personas, permisos y registros de horas. Permite visualizar, crear, editar y eliminar registros a través de una API REST personalizada y una interfaz intuitiva.
+Aplicación web desarrollada con Angular y TypeScript para la gestión de empleados, permisos y registros de horas. Permite visualizar, crear, editar y eliminar registros a través de una API REST personalizada y una interfaz intuitiva.
 
 Este proyecto fue realizado como parte del requisito final para culminar mi etapa productiva en el SENA como Desarrollador Frontend Angular Jr.
 
 # OBJETIVO
-Desarrollar una aplicación de Página Única (SPA) que permita realizar operaciones CRUD sobre personas, permisos y registros de asistencia, aplicando buenas prácticas de desarrollo frontend con Angular, uso de TypeScript, componentes reutilizables, validaciones reactivas y consumo de una API propia.
+Desarrollar una aplicación de Página Única (SPA) que permita realizar operaciones CRUD sobre empleados, permisos y registros de asistencia, aplicando buenas prácticas de desarrollo frontend con Angular, uso de TypeScript, componentes reutilizables, validaciones reactivas y consumo de una API propia.
 
 # FUNCIONALIDADES PRINCIPALES
 Listado de personas con opción de búsqueda, edición y eliminación
@@ -97,26 +96,45 @@ tslib
 
 ## EVIDENCIA (Imagenes)
 ###  Evidencia 1 – Vista Inicio de Sesión
-![Evidencia 1](https://drive.google.com/file/d/19tjMDtWuRNkPBfO-ru-b9e_UI1jpmMZb/view?usp=sharing)
+![Vista Login](https://github.com/kennyLond/FrontEnd--Sistema-de-Horarios-y-Permisos/blob/main/src/assets/evidencia/01_vista_login.png?raw=true)
 
 ###  Evidencia 2 – Vista Registrar Usuario
-![Evidencia 2](https://drive.google.com/file/d/10l8U5m_hyUPVIj8lSCQrUg4xiLglSJ7F/view?usp=sharing)
+![Evidencia 2](https://github.com/kennyLond/FrontEnd--Sistema-de-Horarios-y-Permisos/blob/main/src/assets/evidencia/02_vista_registro_usuario.png?raw=true)
 
 ###  Evidencia 3 – Confirmación de Usuario creado
-![Evidencia 3](https://drive.google.com/file/d/10l8U5m_hyUPVIj8lSCQrUg4xiLglSJ7F/view?usp=sharing)
+![Evidencia 3](https://github.com/kennyLond/FrontEnd--Sistema-de-Horarios-y-Permisos/blob/main/src/assets/evidencia/03_confirmacion_usuario_creado.png?raw=true)
 
-###  Evidencia 4 – Edición de libro (Editar Orgullo y Odio por Orgullo y prejuicio )
-![Evidencia 4](https://drive.google.com/uc?id=1NGt2ZxH5pM0tD3up8gZ_g-aFg85EFI5k)
+###  Evidencia 4 – Vista Principal
+![Evidencia 4](https://github.com/kennyLond/FrontEnd--Sistema-de-Horarios-y-Permisos/blob/main/src/assets/evidencia/04_vista_principal.png?raw=true)
 
-###  Evidencia 5 – Calendario de publicación
-![Evidencia 5](https://drive.google.com/uc?id=1NKUKMotr_QAqRLnACMd1mgRplZ33dGCz)
+###  Evidencia 5 – Agregar Empleado (Pedro Lanziano)
+![Evidencia 5](https://github.com/kennyLond/FrontEnd--Sistema-de-Horarios-y-Permisos/blob/main/src/assets/evidencia/05_agregar_empleado.png?raw=true)
 
-### Evidencia 6 – Confirmación de eliminación
-![Evidencia 6](https://drive.google.com/uc?id=10-nSJ4b9IY3ijJGvFcCVebgVp4_z2UJX)
+### Evidencia 6 – Vista Actualizada (Persona Agregada)
+![Evidencia 6](https://github.com/kennyLond/FrontEnd--Sistema-de-Horarios-y-Permisos/blob/main/src/assets/evidencia/06_vista_actualizada.png?raw=true)
 
-### Evidencia 7 – Registro de nuevo libro
-![Evidencia 7a](https://drive.google.com/uc?id=1tnu5zR7rZDJiVOpgPLJnVqLQkIB7cB91)
-![Evidencia 7b](https://drive.google.com/uc?id=19E4EaZZiY_gzD7GOpGqyxfzfoGJkXgw8)
+### Evidencia 7 – Editar Empleado (Laura Marcela)
+![Evidencia 7a](https://github.com/kennyLond/FrontEnd--Sistema-de-Horarios-y-Permisos/blob/main/src/assets/evidencia/07_editar_empleado.png?raw=true)
+
+### evidencia 8 - Vista Actualizada (Persona actualizada)
+![Evidencia 7b](https://github.com/kennyLond/FrontEnd--Sistema-de-Horarios-y-Permisos/blob/main/src/assets/evidencia/08_vista_editada.png?raw=true)
+
+### evidencia 9 - Eliminar Empleado
+![Evidencia 7b](https://github.com/kennyLond/FrontEnd--Sistema-de-Horarios-y-Permisos/blob/main/src/assets/evidencia/09_eliminar.png?raw=true)
+
+### evidencia 10 - Confirmar Eliminación
+![Evidencia 7b](https://github.com/kennyLond/FrontEnd--Sistema-de-Horarios-y-Permisos/blob/main/src/assets/evidencia/10_confirmacion_eliminar.png?raw=true)
+
+### evidencia 11 - Vista Actualizada (Persona Eliminada)
+![Evidencia 7b](https://github.com/kennyLond/FrontEnd--Sistema-de-Horarios-y-Permisos/blob/main/src/assets/evidencia/11_persona_eliminada.png?raw=tru)
+
+### evidencia 12 - Vista Solicitud de Permisos
+![Evidencia 7b](https://github.com/kennyLond/FrontEnd--Sistema-de-Horarios-y-Permisos/blob/main/src/assets/evidencia/12_vista_permisos.png?raw=true)
+
+### evidencia 13 - Vista Registro de Horas
+![Evidencia 7b](https://github.com/kennyLond/FrontEnd--Sistema-de-Horarios-y-Permisos/blob/main/src/assets/evidencia/13_vista_registro_horas.png?raw=true)
+
+
 
 ## Tecnologías Utilizadas
 
@@ -159,64 +177,3 @@ Mantenimiento del código
 
 Lectura clara para otros desarrolladores
 
-=======
-# FronTEndCRUD
-
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.0.
-
-## Development server
-
-To start a local development server, run:
-
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
->>>>>>> d2fa9c1 (Initial commit)
